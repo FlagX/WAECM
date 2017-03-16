@@ -1,10 +1,17 @@
 # Dockerfile
 
-FROM postgres:9.6.2
-ENV POSTGRES_USER docker
-ENV POSTGRES_PASSWORD docker
-ENV POSTGRES_DB docker
-RUN apt-get update
+FROM ubuntu:latest
+
+# import MongoDB public GPG key and create a MongoDB list file
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+RUN echo "deb http://repo.mongodb.org/apt/ubuntu $(cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2)/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+# Update apt-get sources and install MongoDB
+RUN apt-get update && apt-get install -y mongodb-org
+
+# Create the MongoDB data directory
+RUN mkdir -p /data/db
+
 # install wget
 RUN apt-get install -y wget curl
 # get maven 3.2.2
@@ -40,3 +47,7 @@ ADD src src
 ADD pom.xml pom.xml
 
 EXPOSE 8080
+EXPOSE 27017
+
+# Set usr/bin/mongod as the dockerized entry-point application
+ENTRYPOINT ["/usr/bin/mongod"]
