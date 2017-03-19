@@ -11,5 +11,4 @@ import at.ac.tuwien.waecm.dto.CounterDto;
 public interface CounterService {
 	CounterDto getCounter();
 	void incrementCounter();
-	void setCounterId(Long counterId);
 }

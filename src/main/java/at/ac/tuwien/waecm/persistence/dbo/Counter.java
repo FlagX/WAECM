@@ -1,19 +1,14 @@
 package at.ac.tuwien.waecm.persistence.dbo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 /**
  * @author Martin Griesler
  */
-@Entity
 public class Counter {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	private Long counter;
 
@@ -23,11 +18,11 @@ public class Counter {
 		this.counter = counter;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
