@@ -45,9 +45,10 @@ RUN update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 20000 &
 
 ADD src src
 ADD pom.xml pom.xml
+ADD package.json package.json
+ADD webpack.config.js webpack.config.js
 
-EXPOSE 8080
-EXPOSE 27017
+EXPOSE 8080 27017
 
 # Set usr/bin/mongod as the dockerized entry-point application
 ENTRYPOINT ["/usr/bin/mongod"]
