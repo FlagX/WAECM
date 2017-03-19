@@ -43,6 +43,11 @@ ENV PATH $JAVA_HOME/bin:$PATH
 # configure symbolic links for the java and javac executables
 RUN update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 20000 && update-alternatives --install /usr/bin/javac javac $JAVA_HOME/bin/javac 20000
 
+# make directory for jar file
+RUN mkdir jar
+
+ADD container_script.sh container_script.sh
+WORKDIR WAECM
 ADD src src
 ADD pom.xml pom.xml
 ADD package.json package.json
@@ -50,5 +55,5 @@ ADD webpack.config.js webpack.config.js
 
 EXPOSE 8080 27017
 
-# Set usr/bin/mongod as the dockerized entry-point application
-ENTRYPOINT ["/usr/bin/mongod"]
+# Set container_script.sh as the entry-point script
+ENTRYPOINT ["bash", "/container_script.sh"]
