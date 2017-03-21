@@ -1,8 +1,8 @@
 package at.ac.tuwien.waecm.persistence.repository;
 
-import at.ac.tuwien.waecm.persistence.dbo.Account;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.CrudRepository;
+
+import at.ac.tuwien.waecm.persistence.dbo.Account;
 
 /**
  * Created by Stefan on 15.03.2017.

@@ -30,6 +30,7 @@ public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
             if(user != null) {
                 return new User(user.getUsername(), user.getPassword(), true, true, true, true,
                         AuthorityUtils.createAuthorityList("USER")) {
+							private static final long serialVersionUID = 3822382708618604189L;
                 };
             } else {
                 throw new UsernameNotFoundException("could not find the user '"

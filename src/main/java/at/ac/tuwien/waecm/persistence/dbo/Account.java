@@ -1,10 +1,11 @@
 package at.ac.tuwien.waecm.persistence.dbo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import javax.persistence.Id;
 
 
 /**
