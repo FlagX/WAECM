@@ -1,10 +1,12 @@
 package at.ac.tuwien.waecm.persistence.dbo;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Martin Griesler
  */
+@Document
 public class Counter {
 
 	@Id
