@@ -1,22 +1,23 @@
 package at.ac.tuwien.waecm.persistence.dbo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 
 /**
  * Created by Stefan on 15.03.2017.
  */
-@Document
+@Entity
 @RepositoryRestResource(exported = false)
 public class Account {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
     private String username;
     private @JsonIgnore String password;
 
@@ -27,11 +28,11 @@ public class Account {
         this.password = password;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

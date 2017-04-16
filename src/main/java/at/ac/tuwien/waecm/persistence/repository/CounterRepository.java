@@ -1,11 +1,11 @@
 package at.ac.tuwien.waecm.persistence.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
 import at.ac.tuwien.waecm.persistence.dbo.Counter;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  * @author Martin Griesler
  */
-public interface CounterRepository extends MongoRepository<Counter, String> {
+public interface CounterRepository extends CrudRepository<Counter, String> {
 
 }

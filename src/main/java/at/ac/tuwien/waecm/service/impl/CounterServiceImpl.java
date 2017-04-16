@@ -7,6 +7,7 @@ import at.ac.tuwien.waecm.service.CounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,8 @@ public class CounterServiceImpl implements CounterService {
 
 	@Override
 	public CounterDto getCounter() {
-		List<Counter> counterList = counterRepository.findAll();
+		List<Counter> counterList = new ArrayList<>();
+		counterRepository.findAll().forEach(counterList::add);
 		if(counterList.isEmpty()) {
 			Counter counter = counterRepository.save(new Counter(Long.valueOf(0)));
 			return new CounterDto(counter.getCounter());
@@ -29,7 +31,8 @@ public class CounterServiceImpl implements CounterService {
 
 	@Override
 	public void incrementCounter() {
-		List<Counter> counterList = counterRepository.findAll();
+		List<Counter> counterList = new ArrayList<>();
+		counterRepository.findAll().forEach(counterList::add);
 		if(counterList.isEmpty()) {
 			counterRepository.save(new Counter(Long.valueOf(1)));
 		}

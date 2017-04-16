@@ -1,4 +1,4 @@
-exec /usr/bin/mongod &
+service postgresql start
 if [ "$1" == "build" ]
 then
    cd /WAECM && mvn clean package && cp /WAECM/target/group6-0.0.1-SNAPSHOT.jar /jar

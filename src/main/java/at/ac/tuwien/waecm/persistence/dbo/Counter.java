@@ -1,16 +1,18 @@
 package at.ac.tuwien.waecm.persistence.dbo;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * @author Martin Griesler
  */
-@Document
+@Entity
 public class Counter {
 
 	@Id
-	private String id;
+	@GeneratedValue
+	private Long id;
 
 	private Long counter;
 
@@ -20,11 +22,11 @@ public class Counter {
 		this.counter = counter;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
