@@ -17,7 +17,7 @@
 
 To build the Docker Image: (move into the directory where the Dockerfile is located, or pass its path as the last argument instead of ".") `docker build -t waecm-bsp1 .`
 
-To create a container: `docker run waecm-bsp1 -p 8080:8080 --name group6 waecm-bsp1 deploy|build` 
+To create a container: `docker run -p 8080:8080 --name group6 waecm-bsp1 deploy|build` 
 `build` - only create Artifacts and copy them to /jar
 `deploy` - build the project and start the application
 It is recommended to mount the host's src directory into the image, so it is not necessary to execute the build command again.
