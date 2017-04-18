@@ -73,10 +73,11 @@ RUN mkdir jar
 
 ADD container_script.sh container_script.sh
 WORKDIR WAECM
-ADD src src
 ADD pom.xml pom.xml
-ADD package.json package.json
-ADD webpack.config.js webpack.config.js
+ADD app/pom.xml app/pom.xml
+ADD app/src app/src
+ADD app/package.json app/package.json
+ADD app/webpack.config.js app/webpack.config.js
 
 EXPOSE 8080 5432
 
