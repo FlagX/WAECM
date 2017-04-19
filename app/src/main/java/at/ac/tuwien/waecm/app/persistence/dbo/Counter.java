@@ -1,4 +1,4 @@
-package at.ac.tuwien.waecm.persistence.dbo;
+package at.ac.tuwien.waecm.app.persistence.dbo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

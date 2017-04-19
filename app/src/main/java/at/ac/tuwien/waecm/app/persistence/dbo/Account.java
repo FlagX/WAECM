@@ -1,4 +1,4 @@
-package at.ac.tuwien.waecm.persistence.dbo;
+package at.ac.tuwien.waecm.app.persistence.dbo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

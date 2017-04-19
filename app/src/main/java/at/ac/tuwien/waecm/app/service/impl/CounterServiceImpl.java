@@ -1,9 +1,9 @@
-package at.ac.tuwien.waecm.service.impl;
+package at.ac.tuwien.waecm.app.service.impl;
 
-import at.ac.tuwien.waecm.dto.CounterDto;
-import at.ac.tuwien.waecm.persistence.dbo.Counter;
-import at.ac.tuwien.waecm.persistence.repository.CounterRepository;
-import at.ac.tuwien.waecm.service.CounterService;
+import at.ac.tuwien.waecm.app.persistence.repository.CounterRepository;
+import at.ac.tuwien.waecm.app.service.CounterService;
+import at.ac.tuwien.waecm.app.dto.CounterDto;
+import at.ac.tuwien.waecm.app.persistence.dbo.Counter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

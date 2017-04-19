@@ -1,12 +1,11 @@
-package at.ac.tuwien.waecm;
+package at.ac.tuwien.waecm.app;
 
+import at.ac.tuwien.waecm.app.service.CounterService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import at.ac.tuwien.waecm.service.CounterService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

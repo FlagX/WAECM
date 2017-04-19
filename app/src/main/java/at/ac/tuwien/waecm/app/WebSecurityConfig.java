@@ -1,4 +1,4 @@
-package at.ac.tuwien.waecm;
+package at.ac.tuwien.waecm.app;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

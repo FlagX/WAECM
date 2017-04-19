@@ -1,4 +1,4 @@
-package at.ac.tuwien.waecm.dto;
+package at.ac.tuwien.waecm.app.dto;
 
 /**
  * @author Martin Griesler

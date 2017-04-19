@@ -1,8 +1,8 @@
-package at.ac.tuwien.waecm.service;
+package at.ac.tuwien.waecm.app.service;
 
 import org.springframework.stereotype.Service;
 
-import at.ac.tuwien.waecm.dto.CounterDto;
+import at.ac.tuwien.waecm.app.dto.CounterDto;
 
 /**
  * @author Martin Griesler

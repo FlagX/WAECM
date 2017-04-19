@@ -1,14 +1,13 @@
-package at.ac.tuwien.waecm.controller;
+package at.ac.tuwien.waecm.app.controller;
 
+import at.ac.tuwien.waecm.app.dto.CounterDto;
+import at.ac.tuwien.waecm.app.service.CounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import at.ac.tuwien.waecm.dto.CounterDto;
-import at.ac.tuwien.waecm.service.CounterService;
 
 /**
  * @author Martin Griesler

@@ -1,4 +1,4 @@
-package at.ac.tuwien.waecm.controller;
+package at.ac.tuwien.waecm.app.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
