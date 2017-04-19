@@ -78,6 +78,8 @@ ADD app/pom.xml app/pom.xml
 ADD app/src app/src
 ADD app/package.json app/package.json
 ADD app/webpack.config.js app/webpack.config.js
+ADD oauth/pom.xml oauth/pom.xml
+ADD oauth/src oauth/src
 
 EXPOSE 8080 5432
 
