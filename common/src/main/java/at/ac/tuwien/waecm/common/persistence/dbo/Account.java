@@ -1,7 +1,4 @@
-package at.ac.tuwien.waecm.app.persistence.dbo;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+package at.ac.tuwien.waecm.common.persistence.dbo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,14 +9,13 @@ import javax.persistence.Id;
  * Created by Stefan on 15.03.2017.
  */
 @Entity
-@RepositoryRestResource(exported = false)
 public class Account {
 
     @Id
     @GeneratedValue
     private Long id;
     private String username;
-    private @JsonIgnore String password;
+    private String password;
 
     protected Account() {}
 

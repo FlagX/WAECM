@@ -1,7 +1,7 @@
 package at.ac.tuwien.waecm.app;
 
-import at.ac.tuwien.waecm.app.persistence.dbo.Account;
-import at.ac.tuwien.waecm.app.persistence.repository.AccountRepository;
+import at.ac.tuwien.waecm.common.persistence.dbo.Account;
+import at.ac.tuwien.waecm.common.persistence.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

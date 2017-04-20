@@ -1,6 +1,6 @@
-package at.ac.tuwien.waecm.app.persistence.repository;
+package at.ac.tuwien.waecm.common.persistence.repository;
 
-import at.ac.tuwien.waecm.app.persistence.dbo.Account;
+import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 import org.springframework.data.repository.CrudRepository;
 
 /**

@@ -17,6 +17,7 @@
     <modules>
         <module>app</module>
         <module>oauth</module>
+        <module>common</module>
     </modules>
 
     <properties>
