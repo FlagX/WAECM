@@ -21,11 +21,19 @@ public class Account {
     private String username;
     private @JsonIgnore String password;
 
+    private Double balance = new Double(0);
+
     protected Account() {}
 
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public Account(String username, String password, Double balance) {
+        this.username = username;
+        this.password = password;
+        this.balance = balance;
     }
 
     public Long getId() {
