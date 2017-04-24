@@ -1,4 +1,5 @@
 service postgresql start
+service nginx start
 if [ "$1" == "build" ]
 then
    cd /WAECM && mvn clean package &&

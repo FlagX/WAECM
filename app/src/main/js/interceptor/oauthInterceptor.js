@@ -50,7 +50,7 @@
             init: function (config) {
                 authProvider = new oAuth.Provider({
                     id: 'openid',   // required
-                    authorization_url: 'http://localhost:9999/oauth/authorize' // required
+                    authorization_url: 'http://localhost:8080/oauth/authorize' // required
                 });
 
                 if (urlContainsToken(window.location.href)) {

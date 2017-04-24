@@ -37,6 +37,10 @@ RUN echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
 # Run the rest of the commands as root
 USER root
 
+# install nginx
+RUN apt-get update && apt-get install -y nginx
+
+
 # install wget
 RUN apt-get install -y wget curl
 # get maven 3.2.2
@@ -72,6 +76,7 @@ RUN update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 20000 &
 RUN mkdir jar
 
 ADD container_script.sh container_script.sh
+ADD nginx.conf /etc/nginx/conf.d/nginx.conf
 WORKDIR WAECM
 ADD pom.xml pom.xml
 ADD app/pom.xml app/pom.xml
@@ -80,6 +85,8 @@ ADD app/package.json app/package.json
 ADD app/webpack.config.js app/webpack.config.js
 ADD oauth/pom.xml oauth/pom.xml
 ADD oauth/src oauth/src
+ADD common/pom.xml common/pom.xml
+ADD common/src common/src
 
 EXPOSE 8080 5432
 
