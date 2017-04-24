@@ -25,3 +25,5 @@ nbdist/
 
 ### node ###
 node_modules/
+
+app/src/main/resources/static/built
