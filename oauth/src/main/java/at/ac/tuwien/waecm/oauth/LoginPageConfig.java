@@ -19,16 +19,13 @@ public class LoginPageConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String location = "/";
-
         http
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage(location)
+                .loginPage("/login.html")
                 .loginProcessingUrl("/authorize")
-                .defaultSuccessUrl(location + "success")
                 .permitAll()
                 .and()
                 .logout()
