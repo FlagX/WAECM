@@ -60,6 +60,11 @@
                 return config;
             },
             request: function (request) {
+                if (request.path === '/logout'){
+                    authProvider.deleteTokens();
+                    return request;
+                }
+
                 if (!authProvider.hasAccessToken()) {
                     authorize();
                 }

@@ -36,6 +36,7 @@ class App extends React.Component {
                 <GetCounterButton onGetCounter={this.onGetCounter}/>
                 <IncrementCounterButton onIncrementCounter={this.onIncrementCounter}/>
                 <b>Counter: {this.state.counter}</b>
+                <LogoutButton/>
             </div>
         )
     }
@@ -84,7 +85,29 @@ class IncrementCounterButton extends React.Component {
     }
 }
 
+class LogoutButton extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    logout(e) {
+        e.preventDefault();
+        client({method: 'POST', path: '/logout'}).done(response => {
+            window.location.href = '/';
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <button onClick={this.logout}>Logout</button>
+            </div>
+        )
+    }
+}
+
 ReactDOM.render(
     <App />,
     document.getElementById('react')
-)
+);
