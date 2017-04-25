@@ -2,7 +2,7 @@ package at.ac.tuwien.waecm.app.dto;
 
 import java.time.ZonedDateTime;
 
-import at.ac.tuwien.waecm.common.persistence.dbo.Account;
+import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 
 /**
  * @author  Martin Griesler
@@ -10,8 +10,8 @@ import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 public class TransactionDto {
 	private Long id;
 	private String description;
-	private Account owner;
-	private Account target;
+	private AccountDto owner;
+	private AccountDto target;
 	private Double value;
 	private ZonedDateTime created;
 	private ZonedDateTime commited;
@@ -32,19 +32,19 @@ public class TransactionDto {
 		this.description = description;
 	}
 
-	public Account getOwner() {
+	public AccountDto getOwner() {
 		return owner;
 	}
 
-	public void setOwner(Account owner) {
+	public void setOwner(AccountDto owner) {
 		this.owner = owner;
 	}
 
-	public Account getTarget() {
+	public AccountDto getTarget() {
 		return target;
 	}
 
-	public void setTarget(Account target) {
+	public void setTarget(AccountDto target) {
 		this.target = target;
 	}
 
