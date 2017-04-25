@@ -1,5 +1,7 @@
 package at.ac.tuwien.waecm.common.persistence.dto;
 
+import at.ac.tuwien.waecm.common.persistence.dbo.Account;
+
 /**
  * @author  Martin Griesler
  */
@@ -9,6 +11,14 @@ public class AccountDto {
 	private String password;
 
 	private Double balance = new Double(0);
+
+	public static AccountDto of(Account account) {
+		AccountDto accountDto = new AccountDto();
+		accountDto.id = account.getId();
+		accountDto.username = account.getUsername();
+		accountDto.password = account.getPassword();
+		return accountDto;
+	}
 
 	public Long getId() {
 		return id;
