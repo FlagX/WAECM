@@ -61,6 +61,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .antMatchers(
                         "/",
                         "/index.html",
+                        "/login.html",
                         "/built/**"
                 )
                 .permitAll()

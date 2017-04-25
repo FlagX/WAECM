@@ -24,7 +24,7 @@ public class LoginPageConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login/index.html")
+                .loginPage("/login.html")
                 .loginProcessingUrl("/authorize")
                 .permitAll()
                 .and()
