@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Stefan on 25.04.2017.
  */
 @RestController
-public class UserController {
+public class AccountController {
     @Autowired
     private AccountRepository accountRepository;
 
