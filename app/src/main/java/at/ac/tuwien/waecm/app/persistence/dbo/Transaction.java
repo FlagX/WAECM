@@ -28,6 +28,10 @@ public class Transaction {
     private Date created=null;
     private Date commited=null;
 
+    public Transaction() {
+
+    }
+
     public Transaction(String description, Account owner, Account target, Double value, Date created) {
 
         this.description=description;
