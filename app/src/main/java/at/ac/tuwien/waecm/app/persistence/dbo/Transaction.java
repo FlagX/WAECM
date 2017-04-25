@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import at.ac.tuwien.waecm.common.persistence.dbo.Account;
+
 import java.sql.Date;
 
 @Entity
