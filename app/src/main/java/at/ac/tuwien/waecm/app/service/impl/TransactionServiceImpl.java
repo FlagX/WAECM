@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.ZonedDateTime;
 import java.time.Duration;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.List;
 import at.ac.tuwien.waecm.app.service.AccountService;
 import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 import at.ac.tuwien.waecm.common.persistence.repository.AccountRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ import at.ac.tuwien.waecm.app.service.TransactionService;
 import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 @Service
 public class TransactionServiceImpl implements TransactionService {
+
+	private static final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     @Autowired
     TransactionRepository transactionRepository;
@@ -50,7 +55,13 @@ public class TransactionServiceImpl implements TransactionService {
 		newTransaction.setDescription(transaction.getDescription());
 
 		Account currentUser = accountRepository.findOne(accountService.getUserInfo().getId());
+		logger.info("current user has id "+currentUser.getId());
 		Account targetUser = accountRepository.findOne(transaction.getTarget().getId());
+		if(targetUser!=null){
+			logger.info("target account with id "+transaction.getTarget().getId()+" was found");
+		} else {
+			logger.info("could not find target account");
+		}
 
 		newTransaction.setOwner(currentUser);
 		newTransaction.setTarget(targetUser);
@@ -58,8 +69,11 @@ public class TransactionServiceImpl implements TransactionService {
 		//Generate mTAN
 		String tan = "secret123"; //TODO: generate random value here
 		newTransaction.setTan(digestToMD5(tan));
+		logger.info("tan md5 hash for this transaction is:"+newTransaction.getTan());
+
 
 		newTransaction = transactionRepository.save(newTransaction);
+		logger.info("new transaction's id is "+newTransaction.getId());
 
 		return convert(newTransaction);
 	}
@@ -72,23 +86,30 @@ public class TransactionServiceImpl implements TransactionService {
 		ZonedDateTime now = ZonedDateTime.now();
 
 		Duration d = Duration.between(now,trans.getCreated());
+
+		logger.info(d.getSeconds() +" seconds passed since creation of transaction");
+
 		if(d.getSeconds() > 60*5){
 			//TODO: handle too old TAN!
+			logger.info("transaction is too old! can't commit it anymore!");
 			return false;
 		}
 		//check if mTan is valid
-
 		if(!trans.getTan().equals(digestToMD5(tan))){
 			//TODO: handle invalid TAN!
+			logger.info("invalid tan!");
 			return false;
 		}
 
 		//update Tan
 
+
 		trans.setCommited(ZonedDateTime.now());
 		transactionRepository.save(trans);
 
-		return false;
+		logger.info("transaction committed at "+trans.getCommited().format(DateTimeFormatter.ISO_DATE));
+
+		return true;
 	}
 
 	private TransactionDto convert(Transaction transaction) {

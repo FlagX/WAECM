@@ -29,9 +29,15 @@ public class TransactionController {
     @RequestMapping(method = RequestMethod.POST, path = "/transfer")
     public Long transfer(Double value, Long account, String description){
 
+        logger.info("creating new transaction (value="+value+", account="+account+", description="+description+")");
+
         TransactionDto newTransaction = new TransactionDto();
-        newTransaction.setOwner(accountService.getUserInfo());
+
+        logger.info("looking for target account with id "+account);
         newTransaction.setTarget(accountService.findById(account));
+        if(newTransaction.getTarget()!=null){
+            logger.info("account with id "+account+" found!");
+        }
         newTransaction.setDescription(description);
         newTransaction.setCreated(ZonedDateTime.now());
 
@@ -39,7 +45,7 @@ public class TransactionController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/commit")
-    public boolean commitTransaction(String tan, Long transactionId){
+    public Boolean commitTransaction(String tan, Long transactionId){
         return transactionService.commitTransaction(transactionId,tan);
     }
 
