@@ -7,7 +7,10 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('./client');
 
+
 const CreateTransaction = require('./createTransactionComponent');
+//var stompClient = require('./websocket-listener')
+
 
 class App extends React.Component {
 
@@ -16,8 +19,9 @@ class App extends React.Component {
     }
 
     componentDidMount(){
-        $(this.getDOMNode()).modal('show');
-        $(this.getDOMNode()).on('hidden.bs.modal', this.props.handleHideModal);
+        stompClient.register([
+            {route: '/incomingTransaction', callback: this.render()}
+        ]);
     }
 
     render() {
@@ -89,7 +93,7 @@ class UserInfo extends React.Component {
     render() {
         return (
             <ul className="list-unstyled">
-                <li><b>Benuzter: {this.state.name}</b></li>
+                <li><b>Benutzer: {this.state.name}</b></li>
                 <li><b>Kontostand: {this.state.balance} €</b></li>
             </ul>
         )
