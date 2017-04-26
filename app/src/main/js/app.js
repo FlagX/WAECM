@@ -30,10 +30,12 @@ class App extends React.Component {
         client({method: 'POST', path: '/counter'});
     }
 
+
     render() {
         return (
             <div>
                 <UserInfo/>
+                <TransactionDetails/>
                 <Transactions/>
                 <GetCounterButton onGetCounter={this.onGetCounter}/>
                 <IncrementCounterButton onIncrementCounter={this.onIncrementCounter}/>
@@ -134,6 +136,7 @@ class UserInfo extends React.Component {
 };
 
 class TransactionRows extends React.Component {
+
     render() {
         /* the ES6 version of const data = this.props.data */
         const {data} = this.props;
@@ -149,6 +152,7 @@ class TransactionRows extends React.Component {
                 <td>{data.value}</td>
                 <td>{data.owner.username}</td>
                 <td>{data.target.username}</td>
+                <td><TransactionButton transaction={data}/></td>
                 {/*<td>{data.created}</td>*/}
                 {/*<td>{data.commited}</td>*/}
             </tr>
@@ -162,8 +166,28 @@ class TransactionRows extends React.Component {
                     <th>Owner</th>
                     <th>Target</th>
                 </tr>
-                {row}</span>
+                {row}
+            </span>
         );
+    }
+}
+class TransactionButton extends React.Component {
+    constructor(props) {
+        super(props);
+        this.click = this.click.bind(this);
+    }
+
+    click(e) {
+        e.preventDefault();
+        TransactionDetails.showDetails(this.props.transaction);
+    }
+
+    render() {
+        return (
+            <div>
+                <button onClick={this.click}>Show Details</button>
+            </div>
+        )
     }
 }
 
@@ -188,6 +212,44 @@ class Transactions extends React.Component {
                     <TransactionRows data={this.state.transactions} />
                 </table>
         )
+    }
+}
+
+class TransactionDetails extends React.Component {
+
+
+    constructor(props) {
+        super(props);
+        this.state = {transaction: null};
+        window.details = this;
+        // singleton = this;
+    }
+    static showDetails(newTransaction) {
+        if(window.details!=null) {
+            window.details.setState({transaction: newTransaction});
+            window.details.forceUpdate();
+        }
+
+    }
+
+    render() {
+        if(this.state.transaction != null) {
+            return (
+                <ul>
+                    <li>{this.state.transaction.id}</li>
+                    <li>{this.state.transaction.value}</li>
+                    <li>{this.state.transaction.owner.username}</li>
+                    <li>{this.state.transaction.target.username}</li>
+                    {/*<td>{data.created}</td>*/}
+                    {/*<td>{data.commited}</td>*/}
+                </ul>
+            );
+        }
+        else return (
+            <div>
+                [No transaction selected !]
+            </div>
+        );
     }
 }
 
