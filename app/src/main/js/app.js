@@ -15,15 +15,39 @@ class App extends React.Component {
         super(props);
     }
 
+    componentDidMount(){
+        $(this.getDOMNode()).modal('show');
+        $(this.getDOMNode()).on('hidden.bs.modal', this.props.handleHideModal);
+    }
 
     render() {
         return (
             <div>
-                <UserInfo/>
-                <TransactionDetails/>
+
+                <nav className="navbar navbar-default">
+                    <div className="container-fluid">
+                        <div className="navbar-header">
+                            <a className="navbar-brand" href="#">Group6Bank</a>
+                        </div>
+                        <ul className="nav navbar-nav">
+                            <li className="active"><a href="#">Übersicht</a></li>
+                        </ul>
+                        <ul className="nav navbar-nav navbar-right">
+                            <li><UserInfo/></li>
+                            <li><LogoutButton/></li>
+                        </ul>
+                    </div>
+                </nav>
+
                 <Transactions/>
+
                 <CreateTransaction />
-                <LogoutButton/>
+
+                <div className="container">
+                    <TransactionDetails/>
+                </div>
+
+>>>>>>> 027d516... bootstrap design
             </div>
         )
     }
@@ -44,9 +68,7 @@ class LogoutButton extends React.Component {
 
     render() {
         return (
-            <div>
-                <button onClick={this.logout}>Logout</button>
-            </div>
+            <a onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> Logout</a>
         )
     }
 }
@@ -66,9 +88,9 @@ class UserInfo extends React.Component {
     }
     render() {
         return (
-            <ul>
-                <li>Username: {this.state.name}</li>
-                <li>Balance: {this.state.balance} €</li>
+            <ul className="list-unstyled">
+                <li><b>Benuzter: {this.state.name}</b></li>
+                <li><b>Kontostand: {this.state.balance} €</b></li>
             </ul>
         )
 
@@ -95,16 +117,19 @@ class TransactionRows extends React.Component {
             </tr>
         );
         return (
-            <span>
-                <tr>
-                    <th>Id</th>
-                    <th>Description</th>
-                    <th>Value</th>
-                    <th>Owner</th>
-                    <th>Target</th>
-                </tr>
-                {row}
-            </span>
+            <div className="container">
+                <h2>Transaktionen:</h2>
+                <table className="table table-striped">
+                    <tr>
+                        <th>Beschreibung</th>
+                        <th>Betrag</th>
+                        <th>Auftraggeber</th>
+                        <th>Begünstigter</th>
+                        <th></th>
+                    </tr>
+                    {row}
+                </table>
+            </div>
         );
     }
 }
@@ -122,7 +147,7 @@ class TransactionButton extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.click}>Show Details</button>
+                <button type="button" className="btn btn-secondary" onClick={this.click}>Details</button>
             </div>
         )
     }
@@ -144,10 +169,9 @@ class Transactions extends React.Component {
     }
     render() {
         return (
-                <table>
-                    <caption>Transactions:</caption>
-                    <TransactionRows data={this.state.transactions} />
-                </table>
+            <div>
+                <TransactionRows data={this.state.transactions} />
+            </div>
         )
     }
 }
@@ -172,20 +196,21 @@ class TransactionDetails extends React.Component {
     render() {
         if(this.state.transaction != null) {
             return (
-                <ul>
-                    <li>Id: {this.state.transaction.id}</li>
-                    <li>Value: {this.state.transaction.value}</li>
-                    <li>From: {this.state.transaction.owner.username}</li>
-                    <li>To: {this.state.transaction.target.username}</li>
-                    <li>Created: {this.state.transaction.created}</li>
-                    <li>Commited: {this.state.transaction.commited}</li>
-                </ul>
+                <div>
+                    <h4>Transaktionsdetails</h4>
+                    <ul className="list-group">
+                        <li className="list-group-item">Id: {this.state.transaction.id}</li>
+                        <li className="list-group-item">Betrag: {this.state.transaction.value}</li>
+                        <li className="list-group-item">Auftraggeber: {this.state.transaction.owner.username}</li>
+                        <li className="list-group-item">Begünstigter: {this.state.transaction.target.username}</li>
+                        <li className="list-group-item">Erstellt: {this.state.transaction.created}</li>
+                        <li className="list-group-item">Ausgeführt: {this.state.transaction.commited}</li>
+                    </ul>
+                </div>
             );
         }
         else return (
-            <div>
-                No transaction selected !
-            </div>
+            <div></div>
         );
     }
 }

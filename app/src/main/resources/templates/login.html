@@ -4,28 +4,34 @@
     <meta charset="UTF-8" />
     <title>Login</title>
 </head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
 <body>
-    <div>
+    <div className="container">
         <section>
             <h1>Login</h1>
-            <form name="loginForm" action="/authorize" method="post">
+            <form className="form-horizontal" name="loginForm" action="/authorize" method="post">
 
-                <div>
-                    <label for="username">Username</label>
-                    <input id="username"
-                           name="username"
-                           type="text" />
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="username">Benuzternamen:</label>
+                    <div className="col-sm-10">
+                        <input id="username"
+                               name="username"
+                               type="text" />
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="password">Passwort</label>
+                    <div className="col-sm-10">
+                        <input id="password"
+                               name="password"
+                               type="password" />
+                    </div>
                 </div>
 
-                <div>
-                    <label for="password">Passwort</label>
-                    <input id="password"
-                           name="password"
-                           type="password" />
-                </div>
-
-                <div>
-                    <button type="submit">Login</button>
+                <div className="form-group">
+                    <div className="col-sm-offset-2 col-sm-10">
+                        <button type="submit">Login</button>
+                    </div>
                 </div>
             </form>
         </section>
