@@ -14,7 +14,7 @@ import at.ac.tuwien.waecm.app.persistence.repository.TransactionRepository;
 import at.ac.tuwien.waecm.app.service.TransactionService;
 import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 @Service
-public class TransactionServiceImpl implements TransactionService{
+public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     TransactionRepository transactionRepository;
