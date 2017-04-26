@@ -13,23 +13,6 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {counter: ''};
-        this.onGetCounter = this.onGetCounter.bind(this);
-        this.onIncrementCounter = this.onIncrementCounter.bind(this);
-    }
-
-    componentWillMount() {
-        this.onGetCounter();
-    }
-
-    onGetCounter() {
-        client({method: 'GET', path: '/counter'}).done(response => {
-            this.setState({counter: response.entity.count});
-        });
-    }
-
-    onIncrementCounter() {
-        client({method: 'POST', path: '/counter'});
     }
 
 
@@ -39,54 +22,8 @@ class App extends React.Component {
                 <UserInfo/>
                 <TransactionDetails/>
                 <Transactions/>
-                {/*<GetCounterButton onGetCounter={this.onGetCounter}/>*/}
-                {/*<IncrementCounterButton onIncrementCounter={this.onIncrementCounter}/>*/}
-                {/*<b>Counter: {this.state.counter}</b>*/}
                 <CreateTransaction />
                 <LogoutButton/>
-            </div>
-        )
-    }
-}
-
-class GetCounterButton extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        this.props.onGetCounter();
-    }
-
-    render() {
-        return (
-            <div>
-                <button onClick={this.handleSubmit}>Get Counter</button>
-            </div>
-        )
-    }
-}
-
-
-class IncrementCounterButton extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        this.props.onIncrementCounter();
-    }
-
-    render() {
-        return (
-            <div>
-                <button onClick={this.handleSubmit}>Increment Counter</button>
             </div>
         )
     }
