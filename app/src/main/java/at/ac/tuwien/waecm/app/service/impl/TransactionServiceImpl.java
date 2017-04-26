@@ -1,8 +1,7 @@
 package at.ac.tuwien.waecm.app.service.impl;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +40,8 @@ public class TransactionServiceImpl implements TransactionService {
 		result.setId(transaction.getId());
 		result.setValue(transaction.getValue());
 		result.setDescription(transaction.getDescription());
-//		result.setCommited(ZonedDateTime.ofInstant(transaction.getCommited().toInstant(), ZoneId.of("Z")));
-//		result.setCreated(ZonedDateTime.ofInstant(transaction.getCreated().toInstant(), ZoneId.of("Z")));
+		result.setCommited(transaction.getCommited());
+		result.setCreated(transaction.getCreated());
 
 		AccountDto acc = new AccountDto();
 		acc.setId(transaction.getOwner().getId());
@@ -53,6 +52,18 @@ public class TransactionServiceImpl implements TransactionService {
 		acc.setId(transaction.getTarget().getId());
 		acc.setUsername(transaction.getTarget().getUsername());
 		result.setTarget(acc);
+
+		return result;
+	}
+
+	@Override
+	public List<TransactionDto> findByInvolvedAccount(Long id) {
+		List<TransactionDto> result = new ArrayList<>();
+		transactionRepository.findByInvolvedAccount(id).forEach(x -> {
+			result.add(convert(x));
+		});
+
+		result.sort(Comparator.comparing(TransactionDto::getCreated));
 
 		return result;
 	}

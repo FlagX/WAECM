@@ -1,22 +1,25 @@
 package at.ac.tuwien.waecm.app.controller;
 
 import at.ac.tuwien.waecm.app.dto.TransactionDto;
-import at.ac.tuwien.waecm.app.persistence.repository.TransactionRepository;
 import at.ac.tuwien.waecm.app.service.AccountService;
-import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import at.ac.tuwien.waecm.app.service.TransactionService;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @RestController
 public class TransactionController {
+    private static final Logger logger = LoggerFactory.getLogger(TransactionController.class);
 
     @Autowired
     private TransactionService transactionService;
@@ -42,8 +45,12 @@ public class TransactionController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/transactionsByAccountId")
-    public String getTransactions(AccountDto account) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(transactionService.findAll());
+    public List<TransactionDto> getTransactions(@RequestParam("accountid") Long id) throws JsonProcessingException {
+        logger.info("recieved account name: " + id);
+        System.out.println("recieved account name: " + id);
+        List<TransactionDto> result = transactionService.findByInvolvedAccount(id);
+        System.out.println("returning " + result.size() + "transactions");
+
+        return result;
     }
 }
