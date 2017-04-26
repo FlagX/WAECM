@@ -37,9 +37,9 @@ class App extends React.Component {
                 <UserInfo/>
                 <TransactionDetails/>
                 <Transactions/>
-                <GetCounterButton onGetCounter={this.onGetCounter}/>
-                <IncrementCounterButton onIncrementCounter={this.onIncrementCounter}/>
-                <b>Counter: {this.state.counter}</b>
+                {/*<GetCounterButton onGetCounter={this.onGetCounter}/>*/}
+                {/*<IncrementCounterButton onIncrementCounter={this.onIncrementCounter}/>*/}
+                {/*<b>Counter: {this.state.counter}</b>*/}
                 <LogoutButton/>
             </div>
         )
@@ -147,14 +147,11 @@ class TransactionRows extends React.Component {
 
         const row = data.map((data) =>
             <tr>
-                <td>{data.id}</td>
                 <td>{data.description}</td>
                 <td>{data.value}</td>
                 <td>{data.owner.username}</td>
                 <td>{data.target.username}</td>
                 <td><TransactionButton transaction={data}/></td>
-                {/*<td>{data.created}</td>*/}
-                {/*<td>{data.commited}</td>*/}
             </tr>
         );
         return (
@@ -236,18 +233,18 @@ class TransactionDetails extends React.Component {
         if(this.state.transaction != null) {
             return (
                 <ul>
-                    <li>{this.state.transaction.id}</li>
-                    <li>{this.state.transaction.value}</li>
-                    <li>{this.state.transaction.owner.username}</li>
-                    <li>{this.state.transaction.target.username}</li>
-                    {/*<td>{data.created}</td>*/}
-                    {/*<td>{data.commited}</td>*/}
+                    <li>Id: {this.state.transaction.id}</li>
+                    <li>Value: {this.state.transaction.value}</li>
+                    <li>From: {this.state.transaction.owner.username}</li>
+                    <li>To: {this.state.transaction.target.username}</li>
+                    <li>Created: {this.state.transaction.created}</li>
+                    <li>Commited: {this.state.transaction.commited}</li>
                 </ul>
             );
         }
         else return (
             <div>
-                [No transaction selected !]
+                No transaction selected !
             </div>
         );
     }
