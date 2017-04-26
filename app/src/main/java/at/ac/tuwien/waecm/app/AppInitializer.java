@@ -11,12 +11,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AppInitializer implements CommandLineRunner {
 	@Autowired private AccountRepository accountRepository;
 	@Autowired private TransactionRepository transactionRepository;
+	@Autowired private PasswordEncoder passwordEncoder;
 
 	private String[] users = {"user", "harald", "karl", "franz", "anna"};
 
@@ -32,7 +34,7 @@ public class AppInitializer implements CommandLineRunner {
 
 	private void addUser(String name) {
 		if(accountRepository.findByUsername(name) == null) {
-			accountRepository.save(new Account(name, "password"));
+			accountRepository.save(new Account(name, passwordEncoder.encode("password")));
 		}
 	}
 
