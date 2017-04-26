@@ -25,4 +25,9 @@ public class AccountServiceImpl implements AccountService {
         return AccountDto.of(account);
     }
 
+    @Override
+    public AccountDto findById(Long id) {
+        return AccountDto.of(accountRepository.findOne(id));
+    }
+
 }

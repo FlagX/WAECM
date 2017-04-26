@@ -8,4 +8,5 @@ public interface AccountService {
 
     AccountDto getUserInfo();
 
+    AccountDto findById(Long id);
 }
