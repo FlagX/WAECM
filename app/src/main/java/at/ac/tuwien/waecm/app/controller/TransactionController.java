@@ -1,6 +1,8 @@
 package at.ac.tuwien.waecm.app.controller;
 
+import at.ac.tuwien.waecm.app.dto.TransactionDto;
 import at.ac.tuwien.waecm.app.persistence.repository.TransactionRepository;
+import at.ac.tuwien.waecm.app.service.AccountService;
 import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,15 +13,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import at.ac.tuwien.waecm.app.service.TransactionService;
 
+import java.time.ZonedDateTime;
+
 @RestController
 public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(method = RequestMethod.POST, path = "/transfer")
     public Long transfer(Double value, Long account, String description){
-        return 0L;
+
+        TransactionDto newTransaction = new TransactionDto();
+
+        newTransaction.setOwner(accountService.getUserInfo());
+        //newTransaction.setTarget(accountService.findById(account));
+        newTransaction.setDescription(description);
+        newTransaction.setCreated(ZonedDateTime.now());
+
+        return transactionService.createTransaction(newTransaction).getId();
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/commit")

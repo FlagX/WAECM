@@ -1,5 +1,6 @@
 package at.ac.tuwien.waecm.app.controller;
 
+import at.ac.tuwien.waecm.app.service.AccountService;
 import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 import at.ac.tuwien.waecm.common.persistence.repository.AccountRepository;
@@ -17,15 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class AccountController {
+
     @Autowired
-    private AccountRepository accountRepository;
+    AccountService accountService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/userinfo")
     public String userinfo() throws JsonProcessingException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Account account = accountRepository.findByUsername(auth.getName());
+        AccountDto currentUser = accountService.getUserInfo();
         ObjectMapper objectMapper = new ObjectMapper();
-        AccountDto accountDto = AccountDto.of(account);
-        return objectMapper.writeValueAsString(accountDto);
+        return objectMapper.writeValueAsString(currentUser);
     }
 }
