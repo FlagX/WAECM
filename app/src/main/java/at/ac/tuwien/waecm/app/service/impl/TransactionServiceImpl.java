@@ -28,6 +28,14 @@ public class TransactionServiceImpl implements TransactionService{
 		return result;
 	}
 
+	@Override
+	public TransactionDto createTransaction(TransactionDto transaction) {
+
+		//TODO
+
+		return null;
+	}
+
 	private TransactionDto convert(Transaction transaction) {
 		TransactionDto result = new TransactionDto();
 		result.setId(transaction.getId());
