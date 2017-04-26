@@ -17,13 +17,13 @@ class App extends React.Component {
     constructor(props) {
         super(props);
     }
-
+/*
     componentDidMount(){
         stompClient.register([
             {route: '/incomingTransaction', callback: this.render()}
         ]);
     }
-
+*/
     render() {
         return (
             <div>
