@@ -28,6 +28,8 @@ public class Transaction {
     private ZonedDateTime created=null;
     private ZonedDateTime commited=null;
 
+    private String tan;
+
     public Transaction() {
 
     }
@@ -97,7 +99,15 @@ public class Transaction {
         this.commited = commited;
     }
 
-	@Override
+    public String getTan() {
+        return tan;
+    }
+
+    public void setTan(String tan) {
+        this.tan = tan;
+    }
+
+    @Override
 	public String toString() {
 		return "Transaction [id=" + id + ", description=" + description + ", owner=" + owner + ", target=" + target
 				+ ", value=" + value + ", created=" + created + ", commited=" + commited + "]";

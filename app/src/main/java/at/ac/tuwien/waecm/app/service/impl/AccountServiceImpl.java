@@ -24,4 +24,5 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepository.findByUsername(auth.getName());
         return AccountDto.of(account);
     }
+
 }

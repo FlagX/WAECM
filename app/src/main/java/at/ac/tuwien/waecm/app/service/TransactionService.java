@@ -16,5 +16,6 @@ public interface TransactionService {
 	List<TransactionDto> findAll();
 	List<TransactionDto> findByInvolvedAccount(Long id);
 	TransactionDto createTransaction(TransactionDto transaction);
+	Boolean commitTransaction(Long id, String tan);
 
 }
