@@ -7,9 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import at.ac.tuwien.waecm.common.persistence.dbo.Account;
-
-import java.sql.Date;
+import java.time.ZonedDateTime;
 
 @Entity
 public class Transaction {
@@ -27,14 +25,14 @@ public class Transaction {
 
     private Double value;
 
-    private Date created=null;
-    private Date commited=null;
+    private ZonedDateTime created=null;
+    private ZonedDateTime commited=null;
 
     public Transaction() {
 
     }
 
-    public Transaction(String description, Account owner, Account target, Double value, Date created) {
+    public Transaction(String description, Account owner, Account target, Double value, ZonedDateTime created) {
 
         this.description=description;
         this.owner = owner;
@@ -83,19 +81,26 @@ public class Transaction {
         this.value = value;
     }
 
-    public Date getCreated() {
+    public ZonedDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(ZonedDateTime created) {
         this.created = created;
     }
 
-    public Date getCommited() {
+    public ZonedDateTime getCommited() {
         return commited;
     }
 
-    public void setCommited(Date commited) {
+    public void setCommited(ZonedDateTime commited) {
         this.commited = commited;
     }
+
+	@Override
+	public String toString() {
+		return "Transaction [id=" + id + ", description=" + description + ", owner=" + owner + ", target=" + target
+				+ ", value=" + value + ", created=" + created + ", commited=" + commited + "]";
+	}
+
 }

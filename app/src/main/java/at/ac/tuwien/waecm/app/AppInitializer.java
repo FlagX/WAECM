@@ -5,7 +5,7 @@ import at.ac.tuwien.waecm.app.persistence.repository.TransactionRepository;
 import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 import at.ac.tuwien.waecm.common.persistence.repository.AccountRepository;
 
-import java.sql.Date;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,25 +18,38 @@ public class AppInitializer implements CommandLineRunner {
 	@Autowired private AccountRepository accountRepository;
 	@Autowired private TransactionRepository transactionRepository;
 
+	private String[] users = {"user", "harald", "karl", "franz", "anna"};
+
 	@Override
 	public void run(String... arg0) throws Exception {
-		if(accountRepository.findByUsername("user") == null) {
-			accountRepository.save(new Account("user", "password"));
+
+		for(String e : users) {
+			addUser(e);
 		}
 
 		transactionRepository.save(createTransactions());
 	}
 
+	private void addUser(String name) {
+		if(accountRepository.findByUsername(name) == null) {
+			accountRepository.save(new Account(name, "password"));
+		}
+	}
+
 	private List<Transaction> createTransactions() {
 		List<Transaction> transactions = new ArrayList<>();
-		for(int i = 0; i < 10; i++) {
-			transactions.add(createTransaction(i));
+		for(int i = 0; i < 30; i++) {
+			Transaction transaction = createTransaction(i);
+			transactions.add(transaction);
 		}
 		return transactions;
 	}
 
 	private Transaction createTransaction(int i) {
-		return new Transaction("Transaction" + i, accountRepository.findByUsername("user"), accountRepository.findByUsername("user"), (double)i, new Date(0));
+		Account owner = accountRepository.findByUsername(users[(i+1) % (users.length-1)]);
+		Account target = accountRepository.findByUsername(users[(i) % (users.length-1)]);
+		Transaction transaction = new Transaction("Transaction" + i, owner, target, (double)i, ZonedDateTime.now().minusDays(i));
+		return transaction;
 	}
 
 }

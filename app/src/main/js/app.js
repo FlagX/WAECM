@@ -175,7 +175,7 @@ class Transactions extends React.Component {
     componentWillMount() {
         client({method: 'GET', path: '/userinfo'}).done(response => {
             this.setState({user: response.entity});
-            client({method: 'GET', path: '/transactionsByAccountId', entity: response}).done(response => {
+            client({method: 'GET', path: '/transactionsByAccountId?accountid='+response.entity.id}).done(response => {
                 this.setState({transactions: response.entity});
             });
         });
