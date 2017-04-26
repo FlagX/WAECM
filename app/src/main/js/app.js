@@ -122,7 +122,7 @@ class TransactionRows extends React.Component {
         );
         return (
             <div className="container">
-                <h2>Transaktionen:</h2>
+                <h3>Transaktionen:</h3>
                 <table className="table table-striped">
                     <tr>
                         <th>Beschreibung</th>

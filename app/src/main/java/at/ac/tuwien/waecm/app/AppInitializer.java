@@ -20,21 +20,26 @@ public class AppInitializer implements CommandLineRunner {
 	@Autowired private TransactionRepository transactionRepository;
 	@Autowired private PasswordEncoder passwordEncoder;
 
-	private String[] users = {"user", "harald", "karl", "franz", "anna"};
+	private String[] users = {"max", "gabi", "erika"};
 
 	@Override
 	public void run(String... arg0) throws Exception {
-
-		for(String e : users) {
-			addUser(e);
-		}
-
+		addUsers();
 		transactionRepository.save(createTransactions());
 	}
 
-	private void addUser(String name) {
-		if(accountRepository.findByUsername(name) == null) {
-			accountRepository.save(new Account(name, passwordEncoder.encode("password")));
+	private void addUsers() {
+		if(accountRepository.findByUsername(users[0]) == null) {
+			accountRepository.save(new Account(users[0], "Max", "Mustermann",
+					passwordEncoder.encode("maxmax"), 1200.22));
+		}
+		if(accountRepository.findByUsername(users[1]) == null) {
+			accountRepository.save(new Account(users[1], "Gabi", "Musterfrau",
+					passwordEncoder.encode("gabigabi"), 20012.23));
+		}
+		if(accountRepository.findByUsername(users[2]) == null) {
+			accountRepository.save(new Account(users[2], "Erika", "Test",
+					passwordEncoder.encode("erikaerika"), 33243.24));
 		}
 	}
 

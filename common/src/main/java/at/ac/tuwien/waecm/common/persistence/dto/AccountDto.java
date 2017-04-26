@@ -9,6 +9,8 @@ public class AccountDto {
 	private Long id;
 	private String username;
 	private String password;
+	private String firstname;
+	private String lastname;
 
 	private Double balance = new Double(0);
 
@@ -17,6 +19,8 @@ public class AccountDto {
 		accountDto.id = account.getId();
 		accountDto.username = account.getUsername();
 		accountDto.password = account.getPassword();
+		accountDto.firstname = account.getFirstname();
+		accountDto.lastname = account.getLastname();
 		return accountDto;
 	}
 
@@ -50,6 +54,22 @@ public class AccountDto {
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 }
