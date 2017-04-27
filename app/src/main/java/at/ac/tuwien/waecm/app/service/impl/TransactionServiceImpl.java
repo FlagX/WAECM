@@ -23,6 +23,9 @@ import at.ac.tuwien.waecm.app.persistence.dbo.Transaction;
 import at.ac.tuwien.waecm.app.persistence.repository.TransactionRepository;
 import at.ac.tuwien.waecm.app.service.TransactionService;
 import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
+
+import javax.transaction.Transactional;
+
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
@@ -79,6 +82,7 @@ public class TransactionServiceImpl implements TransactionService {
 	}
 
 	@Override
+	@Transactional
 	public Boolean commitTransaction(Long id, String tan) {
 		Transaction trans = transactionRepository.findOne(id);
 
@@ -101,11 +105,14 @@ public class TransactionServiceImpl implements TransactionService {
 			return false;
 		}
 
-		//update Tan
-
-
 		trans.setCommited(ZonedDateTime.now());
 		transactionRepository.save(trans);
+
+		Account owner = trans.getOwner();
+		Account target = trans.getTarget();
+
+		owner.setBalance(owner.getBalance()-trans.getValue());
+		target.setBalance(target.getBalance()+trans.getValue());
 
 		logger.info("transaction committed at "+trans.getCommited().format(DateTimeFormatter.ISO_DATE));
 
