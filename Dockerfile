@@ -76,7 +76,12 @@ RUN update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 20000 &
 RUN mkdir jar
 
 ADD container_script.sh container_script.sh
+
+RUN mkdir /etc/nginx/ssl
+ADD waecm.crt /etc/nginx/ssl/waecm.crt
+ADD waecm.key /etc/nginx/ssl/waecm.key
 ADD nginx.conf /etc/nginx/conf.d/nginx.conf
+
 WORKDIR WAECM
 ADD pom.xml pom.xml
 ADD app/pom.xml app/pom.xml
@@ -88,7 +93,7 @@ ADD oauth/src oauth/src
 ADD common/pom.xml common/pom.xml
 ADD common/src common/src
 
-EXPOSE 8080 5432
+EXPOSE 8080
 
 # Set container_script.sh as the entry-point script
 ENTRYPOINT ["bash", "/container_script.sh"]
