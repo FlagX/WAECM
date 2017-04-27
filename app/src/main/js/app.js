@@ -7,6 +7,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const client = require('./client');
 
+const CreateTransaction = require('./createTransactionComponent');
+
 class App extends React.Component {
 
     constructor(props) {
@@ -40,6 +42,7 @@ class App extends React.Component {
                 {/*<GetCounterButton onGetCounter={this.onGetCounter}/>*/}
                 {/*<IncrementCounterButton onIncrementCounter={this.onIncrementCounter}/>*/}
                 {/*<b>Counter: {this.state.counter}</b>*/}
+                <CreateTransaction />
                 <LogoutButton/>
             </div>
         )
