@@ -7,7 +7,7 @@
 ## The Stack
 
 
-*   MongoDB
+*   PostgreSQL
 *   Spring Boot
 *   ReactJS
 
@@ -17,9 +17,9 @@
 
 To build the Docker Image: (move into the directory where the Dockerfile is located, or pass its path as the last argument instead of ".") `docker build -t waecm-bsp1 .`
 
-To create a container: `docker run -p 8080:8080 --name group6 waecm-bsp1 deploy|build` 
-`build` - only create Artifacts and copy them to /jar
-`deploy` - build the project and start the application
+To create a container: `docker run -p 8080:8080 --name group6 waecm-bsp1 deploy|build`__
+`build` - only create Artifacts and copy them to /jar__
+`deploy` - build the project and start the application__
 It is recommended to mount the host's src directory into the image, so it is not necessary to execute the build command again.
 
 
@@ -28,15 +28,24 @@ It is recommended to mount the host's src directory into the image, so it is not
 ## Usage
 
 Once the container has started, you can go to localhost:8080 in your browser.
-Authenticate with "user" and "password".
+Authenticate with given usernames and passwords:__
+Max Mustermann, Username: max, Password: maxmax__
+Gabi MusterFrau, Username: gabi, Password: gabigabi__
+Erika Test, Username: erika, Password: erikaerika
+
 You can also obtain the used resources using the backend's REST API.
 
 ### REST API
 
-GET http://localhost:8080/counter - get the current counter value
-POST http://localhost:8080/counter - increment the counter by one
+Account:
+GET http://localhost:8080/userinfo - get an object of the logged in account
 
-Basic authentication is used ("username" "password")
+Transaction:
+GET http://localhost:8080/transactionsByAccountId - get all transactions where user is involved
+POST http://localhost:8080/transfer - get id of created transaction
+POST http://localhost:8080/commit - return true if commitment succeeded, false otherwise
+
+OAuth2 authentication is used.
 
 
 ------------------------------------------------------------
@@ -46,7 +55,7 @@ Basic authentication is used ("username" "password")
 ### Docker Image
 
 Our Dockerfile extends the official ubuntu image.
-A MongoDB instance, Java and Maven are installed.
+A PostgreSQL instance, Java and Maven are installed.
 
 The entypoint defined within the Dockerfile executes container_script.sh.
 This shell script expects one argument, either deploy or build (see above for explanation).
@@ -59,7 +68,7 @@ The project basically is a Java project using Maven.
 
 We decided to use Spring Boot as our backend framework.
 A REST API is provided and used by the frontend to query data.
-Our persistence layer uses Spring-Boot-Data repositories to communicate with our MongoDB instance.
+Our persistence layer uses Spring-Boot-Data repositories to communicate with our PostgreSQL instance.
 Thymeleaf is used to create the resources that are then transfered as a ReactJS app to clients.
 The user interface is rendered on the client side.
 
