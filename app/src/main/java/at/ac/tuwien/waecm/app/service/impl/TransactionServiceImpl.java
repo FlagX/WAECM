@@ -56,6 +56,7 @@ public class TransactionServiceImpl implements TransactionService {
 		newTransaction.setCreated(ZonedDateTime.now());
 		newTransaction.setCommited(null);
 		newTransaction.setDescription(transaction.getDescription());
+		newTransaction.setValue(transaction.getValue());
 
 		Account currentUser = accountRepository.findOne(accountService.getUserInfo().getId());
 		logger.info("current user has id "+currentUser.getId());
@@ -84,6 +85,7 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	@Transactional
 	public Boolean commitTransaction(Long id, String tan) {
+
 		Transaction trans = transactionRepository.findOne(id);
 
 		//check if still valid
@@ -106,10 +108,20 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 
 		trans.setCommited(ZonedDateTime.now());
-		transactionRepository.save(trans);
+		trans = transactionRepository.save(trans);
+
+		logger.info("transfare the value "+trans.getValue());
 
 		Account owner = accountRepository.findOne(accountService.getUserInfo().getId());
+
+		if(owner==null){
+			logger.info("owner of this transaction not found!");
+		}
 		Account target = accountRepository.findOne(id);
+
+		if(target ==null){
+			logger.info("target of this transaction not found!");
+		}
 
 		owner.setBalance(owner.getBalance()-trans.getValue());
 		target.setBalance(target.getBalance()+trans.getValue());
