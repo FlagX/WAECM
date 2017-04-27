@@ -40,6 +40,7 @@ public class TransactionController {
         }
         newTransaction.setDescription(description);
         newTransaction.setCreated(ZonedDateTime.now());
+        newTransaction.setValue(value);
 
         return transactionService.createTransaction(newTransaction).getId();
     }

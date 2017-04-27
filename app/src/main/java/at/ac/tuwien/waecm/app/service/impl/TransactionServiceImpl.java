@@ -88,10 +88,12 @@ public class TransactionServiceImpl implements TransactionService {
 
 		Transaction trans = transactionRepository.findOne(id);
 
+		logger.info("transaction to commit: "+trans.toString());
+
 		//check if still valid
 		ZonedDateTime now = ZonedDateTime.now();
 
-		Duration d = Duration.between(now,trans.getCreated());
+		Duration d = Duration.between(trans.getCreated(),now);
 
 		logger.info(d.getSeconds() +" seconds passed since creation of transaction");
 
@@ -112,12 +114,12 @@ public class TransactionServiceImpl implements TransactionService {
 
 		logger.info("transfare the value "+trans.getValue());
 
-		Account owner = accountRepository.findOne(accountService.getUserInfo().getId());
+		Account owner = trans.getOwner();
 
 		if(owner==null){
 			logger.info("owner of this transaction not found!");
 		}
-		Account target = accountRepository.findOne(id);
+		Account target = trans.getTarget();
 
 		if(target ==null){
 			logger.info("target of this transaction not found!");

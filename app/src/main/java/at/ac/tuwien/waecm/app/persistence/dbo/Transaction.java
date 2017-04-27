@@ -23,7 +23,7 @@ public class Transaction {
     @ManyToOne
     private Account target;
 
-    private Double value;
+    private Double value = new Double(0);
 
     private ZonedDateTime created=null;
     private ZonedDateTime commited=null;
