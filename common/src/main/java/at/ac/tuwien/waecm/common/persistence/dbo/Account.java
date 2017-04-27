@@ -32,6 +32,8 @@ public class Account {
         this.username = username;
         this.password = password;
         this.balance = balance;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     public Long getId() {

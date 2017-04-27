@@ -51,7 +51,6 @@ class App extends React.Component {
                     <TransactionDetails/>
                 </div>
 
->>>>>>> 027d516... bootstrap design
             </div>
         )
     }
