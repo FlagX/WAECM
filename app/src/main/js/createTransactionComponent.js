@@ -3,7 +3,7 @@
  */
 
 const React = require('react');
-const client = require('./client')
+const client = require('./client').rest;
 
 
 var CreateTransaction =  React.createClass({

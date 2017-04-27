@@ -11,7 +11,6 @@ public class AccountDto {
 	private String password;
 	private String firstname;
 	private String lastname;
-
 	private Double balance = new Double(0);
 
 	public static AccountDto of(Account account) {
@@ -21,6 +20,7 @@ public class AccountDto {
 		accountDto.password = account.getPassword();
 		accountDto.firstname = account.getFirstname();
 		accountDto.lastname = account.getLastname();
+		accountDto.balance = account.getBalance();
 		return accountDto;
 	}
 

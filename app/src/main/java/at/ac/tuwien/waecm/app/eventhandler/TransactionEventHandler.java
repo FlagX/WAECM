@@ -33,8 +33,8 @@ public class TransactionEventHandler {
 
     @HandleAfterSave
     public void updateTransaction(Transaction transaction) {
-        if ((transaction.getTarget().getId() == accountService.getUserInfo().getId()) &&
-                (transaction.getCommited() != null)){
+        //if ((transaction.getTarget().getId() == accountService.getUserInfo().getId()) &&
+        if(transaction.getCommited() != null){
             this.websocket.convertAndSend(
                     MESSAGE_PREFIX, getPath(transaction));
         }

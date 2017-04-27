@@ -18,7 +18,6 @@ public class Account {
     private String password;
     private String firstname;
     private String lastname;
-
     private Double balance = new Double(0);
 
     protected Account() {}

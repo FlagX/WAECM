@@ -1,13 +1,14 @@
 /**
  * Created by stefan on 20.04.17.
  */
+var authProvider;
+
 (function (define) {
     'use strict';
 
     define(function (require) {
 
         var interceptor, oAuth, when;
-        var authProvider;
 
         interceptor = require('rest/interceptor');
         oAuth = require('@zalando/oauth2-client-js');
@@ -94,3 +95,11 @@
     typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : void 0
     // Boilerplate for AMD and Node
 ));
+
+var getToken = function() {
+    if(authProvider != null){
+        return authProvider.getAccessToken();
+    }
+}
+
+module.exports.getToken = getToken;
