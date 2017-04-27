@@ -108,8 +108,8 @@ public class TransactionServiceImpl implements TransactionService {
 		trans.setCommited(ZonedDateTime.now());
 		transactionRepository.save(trans);
 
-		Account owner = trans.getOwner();
-		Account target = trans.getTarget();
+		Account owner = accountRepository.findOne(accountService.getUserInfo().getId());
+		Account target = accountRepository.findOne(id);
 
 		owner.setBalance(owner.getBalance()-trans.getValue());
 		target.setBalance(target.getBalance()+trans.getValue());
