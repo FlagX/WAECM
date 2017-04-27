@@ -17,9 +17,9 @@
 
 To build the Docker Image: (move into the directory where the Dockerfile is located, or pass its path as the last argument instead of ".") `docker build -t waecm-bsp1 .`
 
-To create a container: `docker run -p 8080:8080 --name group6 waecm-bsp1 deploy|build`__
-`build` - only create Artifacts and copy them to /jar__
-`deploy` - build the project and start the application__
+To create a container: `docker run -p 8080:8080 --name group6 waecm-bsp1 deploy|build`  
+`build` - only create Artifacts and copy them to /jar  
+`deploy` - build the project and start the application  
 It is recommended to mount the host's src directory into the image, so it is not necessary to execute the build command again.
 
 
@@ -28,22 +28,22 @@ It is recommended to mount the host's src directory into the image, so it is not
 ## Usage
 
 Once the container has started, you can go to localhost:8080 in your browser.
-Authenticate with given usernames and passwords:__
-Max Mustermann, Username: max, Password: maxmax__
-Gabi MusterFrau, Username: gabi, Password: gabigabi__
+Authenticate with given usernames and passwords:  
+Max Mustermann, Username: max, Password: maxmax  
+Gabi MusterFrau, Username: gabi, Password: gabigabi  
 Erika Test, Username: erika, Password: erikaerika
 
 You can also obtain the used resources using the backend's REST API.
 
 ### REST API
 
-Account:
-GET http://localhost:8080/userinfo - get an object of the logged in account
+Account:  
+GET http://localhost:8080/userinfo - get an object of the logged in account  
 
-Transaction:
-GET http://localhost:8080/transactionsByAccountId - get all transactions where user is involved
-POST http://localhost:8080/transfer - get id of created transaction
-POST http://localhost:8080/commit - return true if commitment succeeded, false otherwise
+Transaction:  
+GET http://localhost:8080/transactionsByAccountId - get all transactions where user is involved  
+POST http://localhost:8080/transfer - get id of created transaction  
+POST http://localhost:8080/commit - return true if commitment succeeded, false otherwise  
 
 OAuth2 authentication is used.
 
