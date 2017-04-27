@@ -30,16 +30,13 @@ public class AppInitializer implements CommandLineRunner {
 
 	private void addUsers() {
 		if(accountRepository.findByUsername(users[0]) == null) {
-			accountRepository.save(new Account(users[0], "Max", "Mustermann",
-					passwordEncoder.encode("maxmax"), 1200.22));
+			accountRepository.save(new Account(users[0], passwordEncoder.encode("maxmax"), "Max", "Mustermann", 1200.22));
 		}
 		if(accountRepository.findByUsername(users[1]) == null) {
-			accountRepository.save(new Account(users[1], "Gabi", "Musterfrau",
-					passwordEncoder.encode("gabigabi"), 20012.23));
+			accountRepository.save(new Account(users[1], passwordEncoder.encode("gabigabi"), "Gabi", "Musterfrau", 20012.23));
 		}
 		if(accountRepository.findByUsername(users[2]) == null) {
-			accountRepository.save(new Account(users[2], "Erika", "Test",
-					passwordEncoder.encode("erikaerika"), 33243.24));
+			accountRepository.save(new Account(users[2], passwordEncoder.encode("erikaerika"), "Erika", "Test", 33243.24));
 		}
 	}
 

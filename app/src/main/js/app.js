@@ -45,7 +45,9 @@ class App extends React.Component {
 
                 <Transactions/>
 
-                <CreateTransaction />
+                <div className="container">
+                    <CreateTransaction />
+                </div>
 
                 <div className="container">
                     <TransactionDetails/>
