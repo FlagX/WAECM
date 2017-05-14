@@ -5,6 +5,7 @@ if [ "$1" == "test" ]
 then
    cd /WAECM && mvn clean test
    test_exit_code=$?
+   echo ""
    echo "Unit Test Report"
    cat app/target/surefire-reports/*.txt
    exit "$test_exit_code"
