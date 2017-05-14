@@ -4,7 +4,7 @@ jdk: oraclejdk8
 services: postgresql
 before_script:
   - psql -c "CREATE USER group6 WITH SUPERUSER PASSWORD 'group6';" -U postgres && createdb -O group6 group6
-  - apt-get install -y nginx
+  - sudo apt-get install -y nginx
   - sudo cp nginx.conf /etc/nginx/conf.d/nginx.conf
   - sudo mkdir /etc/nginx/ssl
   - sudo cp waecm.crt /etc/nginx/ssl/waecm.crt
