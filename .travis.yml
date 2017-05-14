@@ -2,4 +2,8 @@ language: java
 sudo: false
 jdk:
   - oraclejdk8
+services:
+  - postgresql
+before_script:
+  - psql -c "CREATE USER group6 WITH SUPERUSER PASSWORD 'group6';" -U postgres && createdb -O group6 group6
 script: mvn clean verify
