@@ -1,6 +1,10 @@
+#!/usr/bin/env bash
 service postgresql start
 service nginx start
-if [ "$1" == "build" ]
+if [ "$1" == "test" ]
+then
+   cd /WAECM && mvn clean test
+elif [ "$1" == "build" ]
 then
    cd /WAECM && mvn clean package &&
        cp /WAECM/app/target/app.jar /jar &&
@@ -11,6 +15,6 @@ then
    cd /WAECM && mvn clean package &&
        cp /WAECM/app/target/app.jar /jar &&
        cp /WAECM/oauth/target/oauth.jar /jar
-       java -jar /jar/app.jar &
+   java -jar /jar/app.jar &
        java -jar /jar/oauth.jar
 fi

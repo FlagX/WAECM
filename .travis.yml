@@ -1,13 +1,7 @@
 language: java
 sudo: required
 jdk: oraclejdk8
-services: postgresql
-before_script:
-  - psql -c "CREATE USER group6 WITH SUPERUSER PASSWORD 'group6';" -U postgres && createdb -O group6 group6
-  - sudo apt-get install -y nginx
-  - sudo cp nginx.conf /etc/nginx/conf.d/nginx.conf
-  - sudo mkdir /etc/nginx/ssl
-  - sudo cp waecm.crt /etc/nginx/ssl/waecm.crt
-  - sudo cp waecm.key /etc/nginx/ssl/waecm.key
-  - sudo service nginx start
-script: mvn clean verify
+services:
+  - docker
+before_script: docker build -t waecm-bsp1 .
+script: docker run -p 8080:8080 --name group6 waecm-bsp1 test
