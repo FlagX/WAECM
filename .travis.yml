@@ -3,7 +3,7 @@ services: docker
 install: docker build -t waecm-bsp1 .
 script:
 - docker run -p 8080:8080 --name group6 waecm-bsp1 test
-- eval $(aws ecr get-login --region eu-west-1)
+- eval $(aws ecr get-login --region us-west-2)
 - docker tag waecm-bsp1:latest 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
 - docker push 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
 env:
