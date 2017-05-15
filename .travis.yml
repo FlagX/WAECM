@@ -20,5 +20,5 @@ deploy:
   provider: script
   skip_cleanup: true
   script: chmod 600 EC2.pem && ssh -o StrictHostKeyChecking=no -i EC2.pem ec2-user@ec2-54-149-113-210.us-west-2.compute.amazonaws.com ./deploy.sh
-    on:
-      branch: development
+  on:
+    branch: development
