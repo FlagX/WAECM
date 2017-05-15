@@ -1,7 +1,4 @@
-language: java
 sudo: required
-jdk: oraclejdk8
-services:
-  - docker
-before_script: docker build -t waecm-bsp1 .
+services: docker
+install: docker build -t waecm-bsp1 .
 script: docker run -p 8080:8080 --name group6 waecm-bsp1 test

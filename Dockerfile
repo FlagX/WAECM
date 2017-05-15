@@ -43,6 +43,8 @@ RUN apt-get update && apt-get install -y nginx
 
 # install wget
 RUN apt-get install -y wget curl
+# install column
+RUN apt-get install bsdmainutils
 # get maven 3.2.2
 RUN wget --no-verbose -O /tmp/apache-maven-3.2.2.tar.gz http://archive.apache.org/dist/maven/maven-3/3.2.2/binaries/apache-maven-3.2.2-bin.tar.gz
 
