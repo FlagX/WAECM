@@ -1,0 +1,11 @@
+version: '2'
+services:
+  web:
+    build:
+      context: .
+    volumes:
+      - /usr/src/app
+    ports:
+      - "8080:8080"
+    image: waecm-bsp1
+    command: deploy
