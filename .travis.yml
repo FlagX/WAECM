@@ -2,7 +2,7 @@ sudo: required
 services: docker
 install: docker build -t waecm-bsp1 .
 script:
-- docker run -p 8080:8080 --name group6 waecm-bsp1 test
+- docker run -v /home/travis/.m2:/root/.m2 -p 8080:8080 --name group6 waecm-bsp1 test
 env:
   global:
   - secure: ScctyXDhmZ4Rm5HcBoSEcEZFDiOzoHV/+wqkRCA8FT1wuAOYBedOoB++bADDICBd2k4KTQFheXg6HjMJ5Fc4bwy8TnA809BG7+s/jOaDrt6Gq6JD7ja0Dx8WRfJ7TlKEAG5D/d1Dn7YD1nJG+/mSzvVoAuQhKOrrPHxQOeN0c3KX8izlZCKMqBRKCzybCuaXsz6TrmZExZhyAnulZzdtvVy/IpWvROrC077AhMmLQeLTtJOSff8ESyt7Y/ydVEQm0ezj09gp63B+E8RkJfAKrikYnEGxb5/VMF7u03dxgI5ivcwYbPFNQYnzjYGKWvXeoR1lc8cvmDtlEW5CrkeJ5yNxttzbGvbFmh/gXhYNlicoQYn1bmjogLFjsjgMJM7pOMkeDdQJ2LiTbCe2koVreJAiARxrvhUdnwrcLxzUbgViSpZi9s9oYrTQaizK+gZwqAMZKD8o/9dhM+/a36lf2uYe31Yue3Lx/y6Bo74iX8w5Fxe+PTUhncY3LgEejh71FuEWR4i++wEr1i4kwJAu3bPkL6U7iyEeJUVfTxnLUNEnvGvVJvBrADTGrMs/vHjwHEO0DhbZW/zqWvXFv/37HZGuVf+lMF/36SVkuk1q5Mx96ltZorfw1c+n9ttBPLnawNYWW26VO0NZJnqT3o+opuzl/QPKDQ6D9JvcwDCosyE=
