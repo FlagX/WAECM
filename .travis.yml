@@ -3,12 +3,6 @@ services: docker
 install: docker build -t waecm-bsp1 .
 script:
 - docker run -p 8080:8080 --name group6 waecm-bsp1 test
-after_success:
-- pip install --user awscli
-- export PATH=$PATH:$HOME/.local/bin
-- eval $(aws ecr get-login --region us-west-2)
-- docker tag waecm-bsp1:latest 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
-- docker push 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
 env:
   global:
   - secure: ScctyXDhmZ4Rm5HcBoSEcEZFDiOzoHV/+wqkRCA8FT1wuAOYBedOoB++bADDICBd2k4KTQFheXg6HjMJ5Fc4bwy8TnA809BG7+s/jOaDrt6Gq6JD7ja0Dx8WRfJ7TlKEAG5D/d1Dn7YD1nJG+/mSzvVoAuQhKOrrPHxQOeN0c3KX8izlZCKMqBRKCzybCuaXsz6TrmZExZhyAnulZzdtvVy/IpWvROrC077AhMmLQeLTtJOSff8ESyt7Y/ydVEQm0ezj09gp63B+E8RkJfAKrikYnEGxb5/VMF7u03dxgI5ivcwYbPFNQYnzjYGKWvXeoR1lc8cvmDtlEW5CrkeJ5yNxttzbGvbFmh/gXhYNlicoQYn1bmjogLFjsjgMJM7pOMkeDdQJ2LiTbCe2koVreJAiARxrvhUdnwrcLxzUbgViSpZi9s9oYrTQaizK+gZwqAMZKD8o/9dhM+/a36lf2uYe31Yue3Lx/y6Bo74iX8w5Fxe+PTUhncY3LgEejh71FuEWR4i++wEr1i4kwJAu3bPkL6U7iyEeJUVfTxnLUNEnvGvVJvBrADTGrMs/vHjwHEO0DhbZW/zqWvXFv/37HZGuVf+lMF/36SVkuk1q5Mx96ltZorfw1c+n9ttBPLnawNYWW26VO0NZJnqT3o+opuzl/QPKDQ6D9JvcwDCosyE=
@@ -19,7 +13,13 @@ before_install:
 deploy:
   provider: script
   skip_cleanup: true
-  script: chmod 600 EC2.pem && ssh -o StrictHostKeyChecking=no -i EC2.pem ec2-user@ec2-54-187-122-131.us-west-2.compute.amazonaws.com ./deploy.sh
+  script: 
+    - pip install --user awscli
+    - export PATH=$PATH:$HOME/.local/bin
+    - eval $(aws ecr get-login --region us-west-2)
+    - docker tag waecm-bsp1:latest 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
+    - docker push 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
+    - chmod 600 EC2.pem && ssh -o StrictHostKeyChecking=no -i EC2.pem ec2-user@ec2-54-187-122-131.us-west-2.compute.amazonaws.com ./deploy.sh
   on:
     branch: master
 cache:
