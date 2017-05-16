@@ -2,27 +2,24 @@ sudo: required
 services: docker
 install: docker build -t waecm-bsp1 .
 script:
-- docker run -v /home/travis/.m2:/root/.m2 -p 8080:8080 --name group6 waecm-bsp1 test
+- docker run -p 8080:8080 --name group6 waecm-bsp1 test
+after_success:
+- pip install --user awscli
+- export PATH=$PATH:$HOME/.local/bin
+- eval $(aws ecr get-login --region us-west-2)
+- docker tag waecm-bsp1:latest 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
+- docker push 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
 env:
   global:
   - secure: ScctyXDhmZ4Rm5HcBoSEcEZFDiOzoHV/+wqkRCA8FT1wuAOYBedOoB++bADDICBd2k4KTQFheXg6HjMJ5Fc4bwy8TnA809BG7+s/jOaDrt6Gq6JD7ja0Dx8WRfJ7TlKEAG5D/d1Dn7YD1nJG+/mSzvVoAuQhKOrrPHxQOeN0c3KX8izlZCKMqBRKCzybCuaXsz6TrmZExZhyAnulZzdtvVy/IpWvROrC077AhMmLQeLTtJOSff8ESyt7Y/ydVEQm0ezj09gp63B+E8RkJfAKrikYnEGxb5/VMF7u03dxgI5ivcwYbPFNQYnzjYGKWvXeoR1lc8cvmDtlEW5CrkeJ5yNxttzbGvbFmh/gXhYNlicoQYn1bmjogLFjsjgMJM7pOMkeDdQJ2LiTbCe2koVreJAiARxrvhUdnwrcLxzUbgViSpZi9s9oYrTQaizK+gZwqAMZKD8o/9dhM+/a36lf2uYe31Yue3Lx/y6Bo74iX8w5Fxe+PTUhncY3LgEejh71FuEWR4i++wEr1i4kwJAu3bPkL6U7iyEeJUVfTxnLUNEnvGvVJvBrADTGrMs/vHjwHEO0DhbZW/zqWvXFv/37HZGuVf+lMF/36SVkuk1q5Mx96ltZorfw1c+n9ttBPLnawNYWW26VO0NZJnqT3o+opuzl/QPKDQ6D9JvcwDCosyE=
   - secure: d/XeyCkPGp+sRisn6LRK2gRF55+7J/ToJ4FOuL9oCRibutIJR8MPPECX3fj1wfOtS0IXLb+q8chSDeBskYq4vw4Z5m7HpOI0sE9ID5DkndcAhIuBYnesG6WaEKfhMP+p55n+dbEWQJ13BCoZjp4SysUsk4XVyzPrjOKGCP9YSeE9mbOtHLhoy50V80/VJeGOT200BeEkGlpBSATFrJcoKrASx2Zr0bWG1YtnKZWMbTeCtl9pITmPNbMp5etPbf6vJSJr7gpQygoSDCUtkc5sI3kPEGUaumm5nP0uob0A2e0zS5wwD3t03MMvNQrVOdftITZ5cfNxkjh+GdPMLZ6cpw8KGtyUsDJzckszi5OhgUDXgi7kOFi6KvTnetXSk7Kp4EcEm92m36wC21r/nLepQNDfMNBtD1bhk9ZzKmOttSx3bhNsfP2DwDqRMOB/mEPUvke/fmsf4pljgjxhjQONLwqI6i91ZF+M49aRHM+wvz4b7kaCBFQZhIKZi57dbX10XMPuhYnqfKJPSs2hTBHHLwhZuh9PdFxcBr2PjYmHEGBHCgRFTfjGqKBJ6jCmpCA4rcoDSY7575laDsHJtd5eSIUbgUFjg2rvjvKaSzQm1tn1Td6kcAyTDjQ4gaHgzzOCz7PISTyZ4k7Ljl/fZ1KkLmj6PRXgQ9qPxNCwHGSffoo=
-before_install:
-- openssl aes-256-cbc -K $encrypted_63a47c097ff5_key -iv $encrypted_63a47c097ff5_iv
-  -in EC2.pem.enc -out ./EC2.pem -d
 deploy:
   provider: script
   skip_cleanup: true
-  script: 
-    - pip install --user awscli
-    - export PATH=$PATH:$HOME/.local/bin
-    - eval $(aws ecr get-login --region us-west-2)
-    - docker tag waecm-bsp1:latest 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
-    - docker push 313230979214.dkr.ecr.us-west-2.amazonaws.com/waecm-bsp1:latest
-    - chmod 600 EC2.pem && ssh -o StrictHostKeyChecking=no -i EC2.pem ec2-user@ec2-54-187-122-131.us-west-2.compute.amazonaws.com ./deploy.sh
+  script: chmod 600 EC2_2.pem && ssh -o StrictHostKeyChecking=no -i EC2_2.pem ec2-user@ec2-54-187-122-131.us-west-2.compute.amazonaws.com
+    ./deploy.sh
   on:
-    branch: master
-cache:
-  directories:
-  - .autoconf
-  - $HOME/.m2
+    branch: development
+before_install:
+- openssl aes-256-cbc -K $encrypted_63a47c097ff5_key -iv $encrypted_63a47c097ff5_iv
+  -in EC2_2.pem.enc -out ./EC2_2.pem -d
