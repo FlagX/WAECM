@@ -18,4 +18,4 @@ deploy:
     branch: development
 before_install:
 - openssl aes-256-cbc -K $encrypted_1db68a17bc07_key -iv $encrypted_1db68a17bc07_iv
-  -in EC2_2.pem.enc -out ./EC2_2.pem -d
+-in EC2_2.pem.enc -out ./EC2_2.pem -d
