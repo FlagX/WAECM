@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import at.ac.tuwien.waecm.app.eventhandler.TransactionNotifier;
 import at.ac.tuwien.waecm.app.service.AccountService;
 import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 import at.ac.tuwien.waecm.common.persistence.repository.AccountRepository;
@@ -39,6 +40,9 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired
 	AccountService accountService;
+
+	@Autowired
+	TransactionNotifier transactionNotifier;
 
 	@Override
 	public List<TransactionDto> findAll() {
@@ -130,6 +134,8 @@ public class TransactionServiceImpl implements TransactionService {
 
 		logger.info("transaction committed at "+trans.getCommited().format(DateTimeFormatter.ISO_DATE));
 
+		transactionNotifier.sendNotification(trans);
+
 		return true;
 	}
 
@@ -144,11 +150,17 @@ public class TransactionServiceImpl implements TransactionService {
 		AccountDto acc = new AccountDto();
 		acc.setId(transaction.getOwner().getId());
 		acc.setUsername(transaction.getOwner().getUsername());
+		acc.setAccountNumber(transaction.getOwner().getAccountNumber());
+		acc.setFirstname(transaction.getOwner().getFirstname());
+		acc.setLastname(transaction.getOwner().getLastname());
 		result.setOwner(acc);
 
 		acc = new AccountDto();
 		acc.setId(transaction.getTarget().getId());
 		acc.setUsername(transaction.getTarget().getUsername());
+		acc.setAccountNumber(transaction.getTarget().getAccountNumber());
+		acc.setFirstname(transaction.getTarget().getFirstname());
+		acc.setLastname(transaction.getTarget().getLastname());
 		result.setTarget(acc);
 
 		return result;

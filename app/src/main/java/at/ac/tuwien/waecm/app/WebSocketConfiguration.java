@@ -1,5 +1,7 @@
 package at.ac.tuwien.waecm.app;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
@@ -12,6 +14,8 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @Component
 @EnableWebSocketMessageBroker
 public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfigurer {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketConfiguration.class);
 
     public static final String MESSAGE_PREFIX = "/incomingTransaction";
 

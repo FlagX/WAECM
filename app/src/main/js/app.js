@@ -9,19 +9,12 @@ const client = require('./client').rest;
 import {registerForNotification} from './client';
 
 const CreateTransaction = require('./createTransactionComponent');
-//var stompClient = require('./client')
 
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount(){
-        registerForNotification([
-            {route: '/incomingTransaction', callback: this.render()}
-        ]);
     }
 
     render() {
@@ -43,8 +36,6 @@ class App extends React.Component {
                     </div>
                 </nav>
 
-                <Transactions/>
-
                 <div className="container">
                     <CreateTransaction />
                 </div>
@@ -52,6 +43,8 @@ class App extends React.Component {
                 <div className="container">
                     <TransactionDetails/>
                 </div>
+
+                <Transactions/>
 
             </div>
         )
@@ -87,7 +80,7 @@ class UserInfo extends React.Component {
     componentWillMount() {
 
         client({method: 'GET', path: '/userinfo'}).done(response => {
-            this.setState({name: response.entity.username});
+            this.setState({name: response.entity.firstname+" "+response.entity.lastname});
             this.setState({balance: response.entity.balance});
         });
     }
@@ -115,7 +108,7 @@ class TransactionRows extends React.Component {
         const row = data.map((data) =>
             <tr>
                 <td>{data.description}</td>
-                <td>{data.value}</td>
+                <td>{data.value} €</td>
                 <td>{data.owner.username}</td>
                 <td>{data.target.username}</td>
                 <td><TransactionButton transaction={data}/></td>
@@ -159,19 +152,29 @@ class TransactionButton extends React.Component {
 }
 
 class Transactions extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {transactions: []};
+        this.getTransactions = this.getTransactions.bind(this);
     }
+
     componentWillMount() {
+        registerForNotification([
+            {route: '/incomingTransaction', callback: this.getTransactions}
+        ]);
+        this.getTransactions();
+    }
+
+    getTransactions(){
         client({method: 'GET', path: '/userinfo'}).done(response => {
             this.setState({user: response.entity});
             client({method: 'GET', path: '/transactionsByAccountId?accountid='+response.entity.id}).done(response => {
                 this.setState({transactions: response.entity});
             });
         });
-
     }
+
     render() {
         return (
             <div>
@@ -188,7 +191,6 @@ class TransactionDetails extends React.Component {
         super(props);
         this.state = {transaction: null};
         window.details = this;
-        // singleton = this;
     }
     static showDetails(newTransaction) {
         if(window.details!=null) {
@@ -204,10 +206,11 @@ class TransactionDetails extends React.Component {
                 <div>
                     <h4>Transaktionsdetails</h4>
                     <ul className="list-group">
-                        <li className="list-group-item">Id: {this.state.transaction.id}</li>
-                        <li className="list-group-item">Betrag: {this.state.transaction.value}</li>
-                        <li className="list-group-item">Auftraggeber: {this.state.transaction.owner.username}</li>
-                        <li className="list-group-item">Begünstigter: {this.state.transaction.target.username}</li>
+                        <li className="list-group-item">Betrag: {this.state.transaction.value} €</li>
+                        <li className="list-group-item">Auftraggeber: {this.state.transaction.owner.firstname} {this.state.transaction.owner.lastname}</li>
+                        <li className="list-group-item">Kontonummer Auftraggeber: {this.state.transaction.owner.accountNumber}</li>
+                        <li className="list-group-item">Begünstigter: {this.state.transaction.target.firstname} {this.state.transaction.target.lastname}<br/></li>
+                        <li className="list-group-item">Kontonummer Begünstigter: {this.state.transaction.target.accountNumber}</li>
                         <li className="list-group-item">Erstellt: {this.state.transaction.created}</li>
                         <li className="list-group-item">Ausgeführt: {this.state.transaction.commited}</li>
                     </ul>

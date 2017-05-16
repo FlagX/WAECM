@@ -7,6 +7,7 @@ import at.ac.tuwien.waecm.common.persistence.dbo.Account;
  */
 public class AccountDto {
 	private Long id;
+	private String accountNumber;
 	private String username;
 	private String password;
 	private String firstname;
@@ -16,6 +17,7 @@ public class AccountDto {
 	public static AccountDto of(Account account) {
 		AccountDto accountDto = new AccountDto();
 		accountDto.id = account.getId();
+		accountDto.accountNumber = account.getAccountNumber();
 		accountDto.username = account.getUsername();
 		accountDto.password = account.getPassword();
 		accountDto.firstname = account.getFirstname();
@@ -30,6 +32,14 @@ public class AccountDto {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 	public String getUsername() {

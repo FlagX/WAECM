@@ -10,6 +10,6 @@ import at.ac.tuwien.waecm.app.persistence.dbo.Transaction;
 import java.util.List;
 
 public interface TransactionRepository extends CrudRepository<Transaction,Long> {
-	@Query("Select t from Transaction t WHERE t.owner.id = :id OR t.target.id = :id")
+	@Query("Select t from Transaction t WHERE (t.owner.id = :id OR t.target.id = :id) AND t.commited IS NOT NULL")
 	List<Transaction> findByInvolvedAccount(@Param("id") Long id);
 }
