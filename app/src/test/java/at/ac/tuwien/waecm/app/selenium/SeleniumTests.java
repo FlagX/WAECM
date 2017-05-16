@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 
-//@Ignore
+@Ignore
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class SeleniumTests {
@@ -47,6 +47,7 @@ public class SeleniumTests {
 			System.setProperty("selenide.browser", "chrome");
 			driver = WebDriverRunner.getWebDriver();
 		} else {
+			String [] phantomJsArgs = {"--ignore-ssl-errors=true"};
 			System.setProperty("selenide.browser", "htmlunit:chrome");
 //			DesiredCapabilities caps = new DesiredCapabilities();
 //			caps.setJavascriptEnabled(true);
