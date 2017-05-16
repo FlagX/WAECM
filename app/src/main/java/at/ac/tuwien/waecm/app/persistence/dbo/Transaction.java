@@ -34,13 +34,14 @@ public class Transaction {
 
     }
 
-    public Transaction(String description, Account owner, Account target, Double value, ZonedDateTime created) {
+    public Transaction(String description, Account owner, Account target, Double value, ZonedDateTime created, ZonedDateTime commited) {
 
         this.description=description;
         this.owner = owner;
         this.target = target;
         this.value = value;
         this.created = created;
+        this.commited = commited;
     }
 
     public Long getId() {

@@ -8,6 +8,7 @@ import at.ac.tuwien.waecm.common.persistence.repository.AccountRepository;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,6 +23,8 @@ public class AppInitializer implements CommandLineRunner {
 
 	private String[] users = {"max", "gabi", "erika"};
 
+	private Random random = new Random();
+
 	@Override
 	public void run(String... arg0) throws Exception {
 		addUsers();
@@ -30,13 +33,13 @@ public class AppInitializer implements CommandLineRunner {
 
 	private void addUsers() {
 		if(accountRepository.findByUsername(users[0]) == null) {
-			accountRepository.save(new Account(users[0], passwordEncoder.encode("maxmax"), "Max", "Mustermann", 1200.22));
+			accountRepository.save(new Account(users[0], passwordEncoder.encode("maxmax"), "1", "Max", "Mustermann", 1200.22));
 		}
 		if(accountRepository.findByUsername(users[1]) == null) {
-			accountRepository.save(new Account(users[1], passwordEncoder.encode("gabigabi"), "Gabi", "Musterfrau", 20012.23));
+			accountRepository.save(new Account(users[1], passwordEncoder.encode("gabigabi"),"2", "Gabi", "Musterfrau", 20012.23));
 		}
 		if(accountRepository.findByUsername(users[2]) == null) {
-			accountRepository.save(new Account(users[2], passwordEncoder.encode("erikaerika"), "Erika", "Test", 33243.24));
+			accountRepository.save(new Account(users[2], passwordEncoder.encode("erikaerika"),"3", "Erika", "Test", 33243.24));
 		}
 	}
 
@@ -50,9 +53,10 @@ public class AppInitializer implements CommandLineRunner {
 	}
 
 	private Transaction createTransaction(int i) {
-		Account owner = accountRepository.findByUsername(users[(i+1) % (users.length-1)]);
-		Account target = accountRepository.findByUsername(users[(i) % (users.length-1)]);
-		Transaction transaction = new Transaction("Transaction" + i, owner, target, (double)i, ZonedDateTime.now().minusDays(i));
+		int first = random.nextInt(users.length);
+		Account owner = accountRepository.findByUsername(users[first]);
+		Account target = accountRepository.findByUsername(users[(first+random.nextInt(users.length-1)+1) % users.length]);
+		Transaction transaction = new Transaction("Transaction " + i, owner, target, (double)random.nextInt(1000), ZonedDateTime.now().minusDays(i), ZonedDateTime.now().minusDays(i));
 		return transaction;
 	}
 

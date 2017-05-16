@@ -14,6 +14,7 @@ public class Account {
     @Id
     @GeneratedValue
     private Long id;
+    private String accountNumber;
     private String username;
     private String password;
     private String firstname;
@@ -27,10 +28,11 @@ public class Account {
         this.password = password;
     }
 
-    public Account(String username, String password, String firstname, String lastname, Double balance) {
+    public Account(String username, String password, String accountNumber, String firstname, String lastname, Double balance) {
         this.username = username;
         this.password = password;
-        this.balance = balance;
+        this.accountNumber = accountNumber;
+        this.balance = Math.round(balance*100)/100.0;
         this.firstname = firstname;
         this.lastname = lastname;
     }
@@ -41,6 +43,15 @@ public class Account {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public String getUsername() {
@@ -80,12 +91,12 @@ public class Account {
     }
 
     public void setBalance(Double balance) {
-        this.balance = balance;
+        this.balance = Math.round(balance*100)/100.0;;
     }
 
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", username=" + username + ", password=" + password + ", balance=" + balance + "]";
+		return "Account [id=" + id + ", account number" + accountNumber + ", username=" + username + ", password=" + password + ", balance=" + balance + "]";
 	}
 
 }

@@ -5,7 +5,6 @@
 const React = require('react');
 const client = require('./client').rest;
 
-
 var CreateTransaction =  React.createClass({
 
     getInitialState () {
@@ -42,18 +41,18 @@ var CreateTransaction =  React.createClass({
         if(this.state.phase == 'create_transaction') {
             return (
                 <div id="createTransactionForm">
-                    <a>Value</a><input type="number" name="value" />
-                    <a>Target Account</a><input type="number" name="target_account" />
-                    <a>Description</a><input type="text" name="description" />
-                    <button onClick={this.onCreateTransaction}>Send Transaction</button>
+                    <label for="value">Betrag:</label><input type="number" step="0.01" name="value" />
+                    <label for="target_account">&nbsp; Kontonummer des Begünstigten: </label><input type="number" name="target_account" />
+                    <label for="description">&nbsp; Beschreibung: </label><input type="text" name="description" />
+                    <button onClick={this.onCreateTransaction}>Freigeben</button>
                 </div>
             );
         } else if(this.state.phase == 'confirm_transaction') {
             return (
                 <div id="commitTransactionForm">
-                    <a>Enter TAN for Transaction {this.state.transaction_to_commit}</a>
-                    <input type="text" />
-                    <button onClick={this.onCommitTransaction}>Confirm Transaction</button>
+                    <label for="tan">Bitte geben Sie den Tan für die Überweisung {this.state.transaction_to_commit} ein:  </label>
+                    <input type="text" name="tan"/>
+                    <button onClick={this.onCommitTransaction}>Bestätigen</button>
                 </div>
             );
         }

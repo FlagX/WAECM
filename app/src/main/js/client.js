@@ -21,7 +21,7 @@ var SockJS = require('sockjs-client');
 require('stompjs');
 
 var registerForNotification = function(registrations) {
-    var socket = SockJS('/transactionNotifier' + '?access_token=' + oAuth.getToken());
+    var socket = SockJS('/transactionNotifier?access_token=' + oAuth.getToken());
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         registrations.forEach(function (registration) {
