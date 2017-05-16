@@ -66,7 +66,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 .withClient("group6")
                 .autoApprove(true)
                 .authorizedGrantTypes("authorization_code", "refresh_token", "password", "implicit")
-                .scopes("openid")
-                .redirectUris("https://localhost:8080");
+                .scopes("openid");
     }
 }

@@ -32,7 +32,7 @@ var authProvider;
         function authorize() {
             let r = new oAuth.Request({
                 client_id: 'group6',  // required
-                redirect_uri: 'https://localhost:8080',
+                redirect_uri: 'https://' + window.location.hostname + ':8080',
                 scope: 'openid'
             });
 
@@ -51,7 +51,7 @@ var authProvider;
             init: function (config) {
                 authProvider = new oAuth.Provider({
                     id: 'openid',   // required
-                    authorization_url: 'https://localhost:8080/oauth/authorize' // required
+                    authorization_url: 'https://' + window.location.hostname + ':8080/oauth/authorize' // required
                 });
 
                 if (urlContainsToken(window.location.href)) {
