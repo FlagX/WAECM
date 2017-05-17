@@ -15,7 +15,7 @@ deploy:
   script: chmod 600 EC2_2.pem && ssh -o StrictHostKeyChecking=no -i EC2_2.pem ec2-user@ec2-54-187-122-131.us-west-2.compute.amazonaws.com
     ./deploy.sh
   on:
-    branch: development
+    branch: master
 before_install:
 - openssl aes-256-cbc -K $encrypted_1db68a17bc07_key -iv $encrypted_1db68a17bc07_iv
   -in EC2_2.pem.enc -out ./EC2_2.pem -d
