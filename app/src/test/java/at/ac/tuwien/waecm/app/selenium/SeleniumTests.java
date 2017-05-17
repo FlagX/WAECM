@@ -1,10 +1,7 @@
 package at.ac.tuwien.waecm.app.selenium;
 
-import static com.codeborne.selenide.Selenide.*;
-
-import java.util.concurrent.TimeUnit;
-import java.util.logging.LogManager;
-
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -13,9 +10,6 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -23,8 +17,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.LogManager;
+
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 @Ignore
 @SpringBootTest
@@ -81,8 +78,8 @@ public class SeleniumTests {
 	@Test
 	public void detailView() {
 		login("max", "maxmax");
-		$(By.xpath("//*[@id=\"react\"]/div/div[1]/div/table/tr[2]/td[5]/div/button")).click();
-		waitUntilPresent(By.xpath("//*[@id=\"react\"]/div/div[3]/div/h4"));
+		$(By.xpath("//*[@id=\"react\"]/div/div[3]/div/table/tr[2]/td[5]/div/button")).click();
+		waitUntilPresent(By.xpath("//*[@id=\"react\"]/div/div[2]/div/h4"));
 	}
 
 	@Test
