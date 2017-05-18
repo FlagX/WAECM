@@ -5,7 +5,7 @@ script:
 - docker pull robcherry/docker-chromedriver:latest
 - docker network create abc
 - docker run --network=abc --name chromedriver --privileged -p 4444:4444 -e CHROMEDRIVER_WHITELISTED_IPS='' -d robcherry/docker-chromedriver:latest
-- docker run --network=abc -v /home/travis/.m2:/root/.m2 -p 8080:8080 --name group6 waecm-bsp1 deploy
+- docker run --network=abc -v /home/travis/.m2:/root/.m2 -p 8080:8080 --name group6 -d waecm-bsp1 deploy
 - bash ./wait.sh
 - bash ./run-tests.sh
 - docker rm -f group6
