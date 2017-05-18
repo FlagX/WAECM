@@ -20,7 +20,7 @@ then
    tail -f /dev/null
 elif [ "$1" == "deploy" ]
 then
-   cd /WAECM && mvn clean install &&
+   cd /WAECM && mvn clean install -DskipTests &&
        cp /WAECM/app/target/app.jar /jar &&
        cp /WAECM/oauth/target/oauth.jar /jar
    java -jar /jar/app.jar &
