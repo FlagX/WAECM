@@ -12,7 +12,7 @@ after_success:
 deploy:
   provider: script
   skip_cleanup: true
-  script: chmod 600 EC2_2.pem && ssh -o StrictHostKeyChecking=no -i EC2_2.pem ec2-user@ec2-54-187-122-131.us-west-2.compute.amazonaws.com
+  script: chmod 600 EC2_2.pem && ssh -o StrictHostKeyChecking=no -i EC2_2.pem $deploy_host
     ./deploy.sh
   on:
     branch: master
