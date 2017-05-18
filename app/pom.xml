@@ -49,33 +49,16 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 
-		<!-- SELENIUM TESTS -->
-		<dependency>
-			<groupId>com.codeborne</groupId>
-			<artifactId>selenide</artifactId>
-			<version>4.4.3</version>
-			<scope>test</scope>
-		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.seleniumhq.selenium</groupId> -->
-<!-- 			<artifactId>selenium-java</artifactId> -->
-<!-- 	        <exclusions> -->
-<!--             <exclusion> -->
-<!-- 				<groupId>org.seleniumhq.selenium</groupId> -->
-<!-- 				<artifactId>htmlunit-driver</artifactId> -->
-<!-- 				</exclusion> -->
-<!-- 			</exclusions> -->
-<!-- 			<scope>test</scope> -->
-<!-- 		</dependency> -->
-
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
-			 <artifactId>htmlunit-driver</artifactId>
+			<artifactId>selenium-java</artifactId>
+			<version>3.4.0</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>app</finalName>
+		<testSourceDirectory> src/test/java/ </testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -115,6 +98,26 @@
 						<id>webpack build</id>
 						<goals>
 							<goal>webpack</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<includes>
+						<include>**/*IT.java</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>integration-test</goal>
+							<!--This goal makes the build fail if you have test failures-->
+							<goal>verify</goal>
 						</goals>
 					</execution>
 				</executions>

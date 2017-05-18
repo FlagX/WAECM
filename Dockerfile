@@ -2,6 +2,7 @@
 
 FROM ubuntu:latest
 
+
 # Add the PostgreSQL PGP key to verify their Debian packages.
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
 RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
@@ -74,6 +75,14 @@ ENV PATH $JAVA_HOME/bin:$PATH
 # configure symbolic links for the java and javac executables
 RUN update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 20000 && update-alternatives --install /usr/bin/javac javac $JAVA_HOME/bin/javac 20000
 
+# install xvfb and run it in background
+RUN apt-get install -y wget xvfb 
+ENV DISPLAY :99.0
+
+# Install Chrome
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+
 # make directory for jar file
 RUN mkdir jar
 
@@ -94,6 +103,7 @@ ADD oauth/pom.xml oauth/pom.xml
 ADD oauth/src oauth/src
 ADD common/pom.xml common/pom.xml
 ADD common/src common/src
+ADD chromedriver chromedriver
 
 EXPOSE 8080
 

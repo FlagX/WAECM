@@ -117,7 +117,7 @@ class TransactionRows extends React.Component {
         return (
             <div className="container">
                 <h3>Transaktionen:</h3>
-                <table className="table table-striped">
+                <table id="transactionTable" className="table table-striped">
                     <tr>
                         <th>Beschreibung</th>
                         <th>Betrag</th>
@@ -203,7 +203,7 @@ class TransactionDetails extends React.Component {
     render() {
         if(this.state.transaction != null) {
             return (
-                <div>
+                <div id="transactionDetails">
                     <h4>Transaktionsdetails</h4>
                     <ul className="list-group">
                         <li className="list-group-item">Betrag: {this.state.transaction.value} €</li>
