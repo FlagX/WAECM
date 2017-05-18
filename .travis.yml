@@ -2,7 +2,12 @@ sudo: required
 services: docker
 install: docker build -t waecm-bsp1 .
 script:
-- docker run -p 8080:8080 --name group6 waecm-bsp1 test
+- docker pull robcherry/docker-chromedriver:latest
+- docker run --network=abc --name chromedriver --privileged -p 4444:4444 -e CHROMEDRIVER_WHITELISTED_IPS='' -d robcherry/docker-chromedriver:latest
+- docker run --network=abc -v /home/travis/.m2:/root/.m2 -p 8080:8080 --name group6 waecm-bsp1 deploy
+- ./wait.sh
+- ./run-tests.sh
+- docker rm -f group6
 after_success:
 - pip install --user awscli
 - export PATH=$PATH:$HOME/.local/bin
@@ -19,3 +24,7 @@ deploy:
 before_install:
 - openssl aes-256-cbc -K $encrypted_1db68a17bc07_key -iv $encrypted_1db68a17bc07_iv
   -in EC2_2.pem.enc -out ./EC2_2.pem -d
+cache: 
+  directories: 
+  - .autoconf 
+  - $HOME/.m2

@@ -1,21 +1,16 @@
 package at.ac.tuwien.waecm.app.selenium;
 
-import static com.codeborne.selenide.Selenide.*;
-
-import java.util.concurrent.TimeUnit;
-import java.util.logging.LogManager;
-
+import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -23,10 +18,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.LogManager;
 
-@Ignore
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class SeleniumTests {
@@ -39,27 +39,22 @@ public class SeleniumTests {
 	@Value("${path.chromedriver}")
 	private String chromeDriverPath;
 
+	@Value("${path.geckodriver}")
+	private String geckoDriverPath;
+
+
 	@Before
-	public void setUp() {
+	public void setUp() throws MalformedURLException {
 		if(isLocal()) {
 //			System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\chromedriver.exe");
 			System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 			System.setProperty("selenide.browser", "chrome");
 			driver = WebDriverRunner.getWebDriver();
 		} else {
-			String [] phantomJsArgs = {"--ignore-ssl-errors=true"};
-			System.setProperty("selenide.browser", "htmlunit:chrome");
-//			DesiredCapabilities caps = new DesiredCapabilities();
-//			caps.setJavascriptEnabled(true);
-//			caps.setCapability("takesScreenshot", true);
-//			caps.setCapability(
-//			                        PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
-//			                        "phantomjs-2.1.1-windows\\bin\\phantomjs.exe"
-//			                    );
-//			driver = new  PhantomJSDriver(caps);
-//			System.setProperty("selenide.browser", "htmlunit:chrome");
-//			driver = new HtmlUnitDriver(BrowserVersion.CHROME, true);
-			driver = WebDriverRunner.getWebDriver();
+			DesiredCapabilities capability = DesiredCapabilities.chrome();
+
+			driver = new RemoteWebDriver(new URL("http://localhost:4444/"), capability);
+
 		}
 
 		driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
@@ -81,8 +76,9 @@ public class SeleniumTests {
 	@Test
 	public void detailView() {
 		login("max", "maxmax");
-		$(By.xpath("//*[@id=\"react\"]/div/div[1]/div/table/tr[2]/td[5]/div/button")).click();
-		waitUntilPresent(By.xpath("//*[@id=\"react\"]/div/div[3]/div/h4"));
+
+		$(By.xpath("//*[@id=\"react\"]/div/div[3]/div/table/tr[2]/td[5]/div/button")).click();
+		waitUntilPresent(By.xpath("//*[@id=\"react\"]/div/div[2]/div/h4"));
 	}
 
 	@Test
@@ -113,7 +109,8 @@ public class SeleniumTests {
 	}
 
 	private void login(String username, String password) {
-		open("https://localhost:8080/login.html");
+		String chromeDriver = System.getenv("group6_ip");
+		open("https://"+ chromeDriver + "/login.html");
 		$(By.id("username")).sendKeys(username);
 		$(By.id("password")).sendKeys(password);
 		$(By.tagName("button")).click();
