@@ -53,7 +53,8 @@ public class SeleniumTests {
 		} else {
 			DesiredCapabilities capability = DesiredCapabilities.chrome();
 
-			driver = new RemoteWebDriver(new URL("http://localhost:4444/"), capability);
+			String chromeDriver_Ip = System.getenv("chromedriver_ip");
+			driver = new RemoteWebDriver(new URL("http://"+chromeDriver_Ip+":4444/"), capability);
 
 		}
 
@@ -109,8 +110,8 @@ public class SeleniumTests {
 	}
 
 	private void login(String username, String password) {
-		String chromeDriver = System.getenv("group6_ip");
-		open("https://"+ chromeDriver + "/login.html");
+		String group6_ip = System.getenv("group6_ip");
+		open("https://"+ group6_ip + "/login.html");
 		$(By.id("username")).sendKeys(username);
 		$(By.id("password")).sendKeys(password);
 		$(By.tagName("button")).click();
