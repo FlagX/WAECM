@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.LogManager;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class SeleniumIT{
@@ -54,6 +57,14 @@ public class SeleniumIT{
 	}
 
 	@Test
+	public void loginWithWrongCredentials() {
+		login("mari", "marimari");
+		waitUntilPresent(By.id("username"));
+		waitUntilPresent(By.id("password"));
+	}
+
+
+	@Test
 	public void detailView() {
 		login("max", "maxmax");
 		waitUntilPresent(By.xpath("//*[@id=\"transactionTable\"]/tr[2]/td[5]/div/button"));
@@ -65,6 +76,10 @@ public class SeleniumIT{
 	public void sendTransaction() {
 		login("max", "maxmax");
 
+		waitUntilPresent(By.xpath("//*[@id=\"transactionTable\"]/tr[2]"));
+
+		int numberOfTransactions = $$(By.xpath("//*[@id=\"transactionTable\"]/tr")).size();
+
 		// enter data
 		$(By.xpath("//*[@id=\"createTransactionForm\"]/input[1]")).sendKeys("123"); //amount
 		$(By.xpath("//*[@id=\"createTransactionForm\"]/input[2]")).sendKeys("2"); //target account
@@ -74,10 +89,42 @@ public class SeleniumIT{
 		waitUntilPresent(By.id("commitTransactionForm "));
 
 		// commit transaction
+		$(By.xpath("//*[@id=\"commitTransactionForm\"]/input")).clear();
 		$(By.xpath("//*[@id=\"commitTransactionForm\"]/input")).sendKeys("secret123");
 		$(By.xpath("//*[@id=\"commitTransactionForm\"]/button")).click();
 
 		waitUntilPresent(By.id("createTransactionForm"));
+		waitUntilPresent(By.xpath("//*[@id=\"transactionTable\"]/tr[2]"));
+
+		assertThat($$(By.xpath("//*[@id=\"transactionTable\"]/tr")).size(),is(numberOfTransactions+1));
+
+		logout();
+	}
+
+	@Test
+	public void sendTransactionWithWrongTan() {
+		login("max", "maxmax");
+
+		waitUntilPresent(By.xpath("//*[@id=\"transactionTable\"]/tr[2]"));
+
+		int numberOfTransactions = $$(By.xpath("//*[@id=\"transactionTable\"]/tr")).size();
+
+		// enter data
+		$(By.xpath("//*[@id=\"createTransactionForm\"]/input[1]")).sendKeys("123"); //amount
+		$(By.xpath("//*[@id=\"createTransactionForm\"]/input[2]")).sendKeys("2"); //target account
+		$(By.xpath("//*[@id=\"createTransactionForm\"]/input[3]")).sendKeys("SeleniumTest"); //description text
+		$(By.xpath("//*[@id=\"createTransactionForm\"]/button")).click();
+
+		waitUntilPresent(By.id("commitTransactionForm "));
+
+		// commit transaction
+		$(By.xpath("//*[@id=\"commitTransactionForm\"]/input")).sendKeys("wrong");
+		$(By.xpath("//*[@id=\"commitTransactionForm\"]/button")).click();
+
+		waitUntilPresent(By.id("createTransactionForm"));
+		waitUntilPresent(By.xpath("//*[@id=\"transactionTable\"]/tr[1]"));
+
+		assertThat($$(By.xpath("//*[@id=\"transactionTable\"]/tr")).size(),is(numberOfTransactions));
 
 		logout();
 	}
@@ -95,7 +142,6 @@ public class SeleniumIT{
 		$(By.id("username")).sendKeys(username);
 		$(By.id("password")).sendKeys(password);
 		$(By.tagName("button")).click();
-		waitUntilPresent(By.id("transactionTable"));
 	}
 
 	private void logout() {
