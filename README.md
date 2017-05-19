@@ -28,10 +28,13 @@ It is recommended to mount the host's src directory into the image, so it is not
 ## Usage
 
 Once the container has started, you can go to localhost:8080 in your browser.
+
 Authenticate with given usernames and passwords:  
-Max Mustermann, Username: max, Password: maxmax  
-Gabi MusterFrau, Username: gabi, Password: gabigabi  
-Erika Test, Username: erika, Password: erikaerika
+Max Mustermann, Username: max, Password: maxmax, Bank Account Number: 1  
+Gabi MusterFrau, Username: gabi, Password: gabigabi, Bank Account Number: 2  
+Erika Test, Username: erika, Password: erikaerika, Bank Account Number: 3
+
+The mocked Tan-Code for the transactions is: secret123.
 
 You can also obtain the used resources using the backend's REST API.
 
@@ -71,6 +74,17 @@ A REST API is provided and used by the frontend to query data.
 Our persistence layer uses Spring-Boot-Data repositories to communicate with our PostgreSQL instance.
 Thymeleaf is used to create the resources that are then transfered as a ReactJS app to clients.
 The user interface is rendered on the client side.
+
+### Continuous Integration
+
+The project uses Travis CI
+
+GitHub/TravisCI Account for Testing: user: waecm-group6-lva, pw: bkKLBek5CE3ksJlhSwwb
+
+### Continuous Delivery
+
+On the master branch after a successful Travis CI build the application gets deployed to a AWS EC2 instance
+and is reachable on https://ec2-54-245-195-87.us-west-2.compute.amazonaws.com:8080/
 
 ------------------------------------------------------------
 
