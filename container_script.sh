@@ -2,6 +2,7 @@
 service postgresql start
 service nginx start
 Xvfb :99 -screen 0 1024x768x16 &
+chmod +x /WAECM/chromedriver
 if [ "$1" == "test" ]
 then
    cd /WAECM && mvn clean verify
