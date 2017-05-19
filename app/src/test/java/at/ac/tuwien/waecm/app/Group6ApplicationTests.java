@@ -1,17 +1,11 @@
 package at.ac.tuwien.waecm.app;
 
+import at.ac.tuwien.waecm.app.service.ServiceException;
 import at.ac.tuwien.waecm.app.service.TransactionService;
-
-import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class Group6ApplicationTests {
+public class Group6ApplicationTests extends AbstractTest {
 
 	@Autowired private TransactionService transactionService;
 
@@ -20,7 +14,7 @@ public class Group6ApplicationTests {
 	}
 
 	@Test
-	public void transactions() {
+	public void transactions() throws ServiceException {
 		transactionService.findAll();
 	}
 }

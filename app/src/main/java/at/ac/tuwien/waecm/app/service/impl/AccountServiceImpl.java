@@ -1,12 +1,11 @@
 package at.ac.tuwien.waecm.app.service.impl;
 
 import at.ac.tuwien.waecm.app.service.AccountService;
+import at.ac.tuwien.waecm.app.service.ServiceException;
 import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 import at.ac.tuwien.waecm.common.persistence.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,15 +18,21 @@ public class AccountServiceImpl implements AccountService {
     AccountRepository accountRepository;
 
     @Override
-    public AccountDto getUserInfo() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Account account = accountRepository.findByUsername(auth.getName());
+    public AccountDto getUserInfo(String username) throws ServiceException {
+        Account account = accountRepository.findByUsername(username);
+        if (account == null) {
+            throw new ServiceException(String.format("User %s not found", username));
+        }
         return AccountDto.of(account);
     }
 
     @Override
-    public AccountDto findById(Long id) {
-        return AccountDto.of(accountRepository.findOne(id));
+    public AccountDto findById(Long id) throws ServiceException {
+        Account account = accountRepository.findOne(id);
+        if (account == null) {
+            throw new ServiceException(String.format("User with id %d not found", id));
+        }
+        return AccountDto.of(account);
     }
 
 }

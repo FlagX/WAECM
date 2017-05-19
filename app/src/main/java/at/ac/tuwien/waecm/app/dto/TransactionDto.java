@@ -2,6 +2,8 @@ package at.ac.tuwien.waecm.app.dto;
 
 import java.time.ZonedDateTime;
 
+import at.ac.tuwien.waecm.app.persistence.dbo.Transaction;
+import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 
 /**
@@ -15,6 +17,23 @@ public class TransactionDto {
 	private Double value;
 	private ZonedDateTime created;
 	private ZonedDateTime commited;
+
+	public static TransactionDto of(Transaction transaction) {
+		if (transaction == null) {
+			return null;
+		}
+
+		TransactionDto transactionDto = new TransactionDto();
+		transactionDto.setId(transaction.getId());
+		transactionDto.setDescription(transaction.getDescription());
+		transactionDto.setOwner(AccountDto.of(transaction.getOwner()));
+		transactionDto.setTarget(AccountDto.of(transaction.getTarget()));
+		transactionDto.setValue(transaction.getValue());
+		transactionDto.setCreated(transaction.getCreated());
+		transactionDto.setCommited(transaction.getCommited());
+
+		return transactionDto;
+	}
 
 	public Long getId(){
 		return this.id;

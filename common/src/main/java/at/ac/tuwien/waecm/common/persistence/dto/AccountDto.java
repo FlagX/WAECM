@@ -15,6 +15,9 @@ public class AccountDto {
 	private Double balance = new Double(0);
 
 	public static AccountDto of(Account account) {
+		if (account == null) {
+			return null;
+		}
 		AccountDto accountDto = new AccountDto();
 		accountDto.id = account.getId();
 		accountDto.accountNumber = account.getAccountNumber();

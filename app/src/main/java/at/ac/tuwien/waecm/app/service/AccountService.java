@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AccountService {
 
-    AccountDto getUserInfo();
+    AccountDto getUserInfo(String username) throws ServiceException;
 
-    AccountDto findById(Long id);
+    AccountDto findById(Long id) throws ServiceException;
 }

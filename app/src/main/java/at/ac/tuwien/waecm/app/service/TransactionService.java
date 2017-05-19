@@ -13,9 +13,9 @@ import at.ac.tuwien.waecm.app.dto.TransactionDto;
  */
 @Service
 public interface TransactionService {
-	List<TransactionDto> findAll();
-	List<TransactionDto> findByInvolvedAccount(Long id);
-	TransactionDto createTransaction(TransactionDto transaction);
-	Boolean commitTransaction(Long id, String tan);
+	List<TransactionDto> findAll() throws ServiceException;
+	List<TransactionDto> findByInvolvedAccount(Long id) throws ServiceException;
+	TransactionDto createTransaction(TransactionDto transaction) throws ServiceException;
+	Boolean commitTransaction(Long id, String tan) throws ServiceException;
 
 }

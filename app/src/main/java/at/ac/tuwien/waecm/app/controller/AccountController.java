@@ -5,6 +5,8 @@ import at.ac.tuwien.waecm.common.persistence.dto.AccountDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +21,9 @@ public class AccountController {
     AccountService accountService;
 
     @RequestMapping(method = RequestMethod.GET, path = "/userinfo")
-    public String userinfo() throws JsonProcessingException {
-        AccountDto currentUser = accountService.getUserInfo();
+    public String userinfo() throws JsonProcessingException, Exception {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        AccountDto currentUser = accountService.getUserInfo(auth.getName());
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(currentUser);
     }

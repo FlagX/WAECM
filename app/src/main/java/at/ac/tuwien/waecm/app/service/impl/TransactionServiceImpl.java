@@ -12,6 +12,7 @@ import java.util.List;
 
 import at.ac.tuwien.waecm.app.eventhandler.TransactionNotifier;
 import at.ac.tuwien.waecm.app.service.AccountService;
+import at.ac.tuwien.waecm.app.service.ServiceException;
 import at.ac.tuwien.waecm.common.persistence.dbo.Account;
 import at.ac.tuwien.waecm.common.persistence.repository.AccountRepository;
 import org.slf4j.Logger;
@@ -39,51 +40,49 @@ public class TransactionServiceImpl implements TransactionService {
 	AccountRepository accountRepository;
 
 	@Autowired
-	AccountService accountService;
-
-	@Autowired
 	TransactionNotifier transactionNotifier;
 
 	@Override
 	public List<TransactionDto> findAll() {
 		List<TransactionDto> result = new ArrayList<>();
 		transactionRepository.findAll().forEach(x -> {
-			result.add(convert(x));
+			result.add(TransactionDto.of(x));
 		});
 		return result;
 	}
 
 	@Override
-	public TransactionDto createTransaction(TransactionDto transaction) {
+	public TransactionDto createTransaction(TransactionDto transactionDto) throws ServiceException {
+		Transaction transaction = new Transaction();
+		transaction.setCreated(ZonedDateTime.now());
+		transaction.setCommited(null);
+		transaction.setDescription(transactionDto.getDescription());
+		transaction.setValue(transactionDto.getValue());
 
-		Transaction newTransaction = new Transaction();
-		newTransaction.setCreated(ZonedDateTime.now());
-		newTransaction.setCommited(null);
-		newTransaction.setDescription(transaction.getDescription());
-		newTransaction.setValue(transaction.getValue());
+		Account currentUser = accountRepository.findByUsername(transactionDto.getOwner().getUsername());
+		if (currentUser == null) {
+			throw new ServiceException(String.format("Could not find user %s", transactionDto.getOwner().getUsername()));
+		}
+		logger.info("current user has id " + currentUser.getId());
 
-		Account currentUser = accountRepository.findOne(accountService.getUserInfo().getId());
-		logger.info("current user has id "+currentUser.getId());
-		Account targetUser = accountRepository.findOne(transaction.getTarget().getId());
-		if(targetUser!=null){
-			logger.info("target account with id "+transaction.getTarget().getId()+" was found");
-		} else {
-			logger.info("could not find target account");
+		Account targetUser = accountRepository.findOne(transactionDto.getTarget().getId());
+		if (targetUser == null) {
+			throw new ServiceException(String.format("Could not find with id %d", transactionDto.getTarget().getId()));
 		}
 
-		newTransaction.setOwner(currentUser);
-		newTransaction.setTarget(targetUser);
+		transaction.setOwner(currentUser);
+		transaction.setTarget(targetUser);
 
 		//Generate mTAN
 		String tan = "secret123"; //TODO: generate random value here
-		newTransaction.setTan(digestToMD5(tan));
-		logger.info("tan md5 hash for this transaction is:"+newTransaction.getTan());
+		transaction.setTan(digestToMD5(tan));
+		logger.info("tan md5 hash for this transaction is:"+transaction.getTan());
 
 
-		newTransaction = transactionRepository.save(newTransaction);
-		logger.info("new transaction's id is "+newTransaction.getId());
+		transaction = transactionRepository.save(transaction);
+		logger.info("new transaction's id is "+transaction.getId());
 
-		return convert(newTransaction);
+		return TransactionDto.of(transaction);
 	}
 
 	@Override
@@ -91,8 +90,11 @@ public class TransactionServiceImpl implements TransactionService {
 	public Boolean commitTransaction(Long id, String tan) {
 
 		Transaction trans = transactionRepository.findOne(id);
+		if (trans == null) {
+			return false;
+		}
 
-		logger.info("transaction to commit: "+trans.toString());
+		logger.info("transaction to commit: " + trans.toString());
 
 		//check if still valid
 		ZonedDateTime now = ZonedDateTime.now();
@@ -139,38 +141,11 @@ public class TransactionServiceImpl implements TransactionService {
 		return true;
 	}
 
-	private TransactionDto convert(Transaction transaction) {
-		TransactionDto result = new TransactionDto();
-		result.setId(transaction.getId());
-		result.setValue(transaction.getValue());
-		result.setDescription(transaction.getDescription());
-		result.setCommited(transaction.getCommited());
-		result.setCreated(transaction.getCreated());
-
-		AccountDto acc = new AccountDto();
-		acc.setId(transaction.getOwner().getId());
-		acc.setUsername(transaction.getOwner().getUsername());
-		acc.setAccountNumber(transaction.getOwner().getAccountNumber());
-		acc.setFirstname(transaction.getOwner().getFirstname());
-		acc.setLastname(transaction.getOwner().getLastname());
-		result.setOwner(acc);
-
-		acc = new AccountDto();
-		acc.setId(transaction.getTarget().getId());
-		acc.setUsername(transaction.getTarget().getUsername());
-		acc.setAccountNumber(transaction.getTarget().getAccountNumber());
-		acc.setFirstname(transaction.getTarget().getFirstname());
-		acc.setLastname(transaction.getTarget().getLastname());
-		result.setTarget(acc);
-
-		return result;
-	}
-
 	@Override
 	public List<TransactionDto> findByInvolvedAccount(Long id) {
 		List<TransactionDto> result = new ArrayList<>();
 		transactionRepository.findByInvolvedAccount(id).forEach(x -> {
-			result.add(convert(x));
+			result.add(TransactionDto.of(x));
 		});
 
 		result.sort(Comparator.comparing(TransactionDto::getCreated));
