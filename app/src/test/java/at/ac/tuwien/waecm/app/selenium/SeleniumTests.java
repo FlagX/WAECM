@@ -113,7 +113,7 @@ public class SeleniumTests {
 	private void login(String username, String password) {
 		String group6_ip = System.getenv("group6_ip");
 		System.out.println("IP group6: " + group6_ip);
-		open("https://" + group6_ip + ":8080/login.html");
+		open("https://group6:8080/login.html");
 		$(By.id("username")).sendKeys(username);
 		$(By.id("password")).sendKeys(password);
 		$(By.tagName("button")).click();
