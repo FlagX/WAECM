@@ -83,8 +83,7 @@ GitHub/TravisCI Account for Testing: user: waecm-group6-lva, pw: bkKLBek5CE3ksJl
 
 ### Continuous Delivery
 
-On the master branch after a successful Travis CI build the application gets deployed to a AWS EC2 instance
-and is reachable on https://ec2-54-245-195-87.us-west-2.compute.amazonaws.com:8080/
+On the master branch after a successful Travis CI build the application gets deployed to a AWS EC2 instance.
 
 ------------------------------------------------------------
 
