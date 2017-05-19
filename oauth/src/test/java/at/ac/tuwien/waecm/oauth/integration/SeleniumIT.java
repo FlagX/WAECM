@@ -1,8 +1,7 @@
-package at.ac.tuwien.waecm.app.selenium;
+package at.ac.tuwien.waecm.oauth.integration;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -22,10 +21,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.LogManager;
 
-@Ignore
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class SeleniumIT {
+public class SeleniumIT{
 
 	private WebDriver driver;
 	private WebDriverWait wait;
