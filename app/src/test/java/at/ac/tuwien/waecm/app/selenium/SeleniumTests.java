@@ -55,7 +55,7 @@ public class SeleniumTests {
 
 			String chromeDriver_Ip = System.getenv("chromedriver_ip");
 			System.out.println("IP chromedriver: " + chromeDriver_Ip);
-			driver = new RemoteWebDriver(new URL("http://chromedriver:4444/"), capability);
+			driver = new RemoteWebDriver(new URL("http://" + chromeDriver_Ip +":4444/"), capability);
 
 		}
 
